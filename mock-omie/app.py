@@ -21,7 +21,6 @@ app = FastAPI(
         "variáveis e reembolsos filtrados por CPF e período."
     ),
     version="1.0.0",
-    openapi_version="3.0.2",
     servers=[
         {
             "url": PUBLIC_SERVER_URL,
@@ -29,6 +28,7 @@ app = FastAPI(
         }
     ],
 )
+app.openapi_version = "3.0.2"
 
 DB_FILE = FilePath(__file__).parent / "db_omie.json"
 
