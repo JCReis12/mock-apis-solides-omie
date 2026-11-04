@@ -1,0 +1,158 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Inovanet - Sólides RH (Mock API)",
+    "description": "API de simulação da Sólides (RH) para o projeto 'Inovanet - Centralização de Ferramentas de RH e Financeiro com Gemini Enterprise'. Expõe endpoint REST para consulta de dados cadastrais, salário base, benefícios fixos e CPF do colaborador.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://SEU-SERVICO-SOLIDES.onrender.com",
+      "description": "Servidor da API Mock Sólides no Render"
+    }
+  ],
+  "paths": {
+    "/solides/colaboradores/{colaborador_id}": {
+      "get": {
+        "tags": [
+          "Sólides (RH)"
+        ],
+        "summary": "Consultar dados cadastrais, salário base e benefícios fixos do colaborador",
+        "description": "Retorna os dados de RH armazenados na Sólides para um colaborador específico a partir do seu colaborador_id (ex: 101 para Ana Beatriz Souza ou 102 para Carlos Eduardo Lima). Inclui o colaborador_cpf necessário para consultar despesas no Omie.",
+        "operationId": "consultar_colaborador_solides",
+        "parameters": [
+          {
+            "name": "colaborador_id",
+            "in": "path",
+            "required": true,
+            "description": "ID interno do colaborador na Sólides (ex: 101 ou 102)",
+            "schema": {
+              "type": "integer",
+              "title": "Colaborador Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ColaboradorSolidesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BeneficiosFixos": {
+        "title": "BeneficiosFixos",
+        "required": [
+          "vale_refeicao_alimentacao",
+          "plano_saude_sulamerica",
+          "wellhub_gympass",
+          "auxilio_home_office"
+        ],
+        "type": "object",
+        "properties": {
+          "vale_refeicao_alimentacao": {
+            "title": "Vale Refeicao Alimentacao",
+            "type": "number",
+            "description": "Valor mensal de VR/VA em R$"
+          },
+          "plano_saude_sulamerica": {
+            "title": "Plano Saude Sulamerica",
+            "type": "number",
+            "description": "Custo mensal do plano de saúde SulAmérica em R$"
+          },
+          "wellhub_gympass": {
+            "title": "Wellhub Gympass",
+            "type": "number",
+            "description": "Custo mensal do benefício Wellhub em R$"
+          },
+          "auxilio_home_office": {
+            "title": "Auxilio Home Office",
+            "type": "number",
+            "description": "Auxílio mensal de home office em R$"
+          }
+        }
+      },
+      "ColaboradorSolidesResponse": {
+        "title": "ColaboradorSolidesResponse",
+        "required": [
+          "colaborador_id",
+          "nome",
+          "colaborador_cpf",
+          "cargo",
+          "departamento",
+          "status",
+          "data_admissao",
+          "salario_base",
+          "beneficios_fixos",
+          "total_beneficios_fixos"
+        ],
+        "type": "object",
+        "properties": {
+          "fonte": {
+            "title": "Fonte",
+            "type": "string",
+            "description": "Sistema de origem do registro",
+            "default": "Sólides RH (Mock)"
+          },
+          "colaborador_id": {
+            "title": "Colaborador Id",
+            "type": "integer",
+            "description": "ID único do colaborador na Sólides"
+          },
+          "nome": {
+            "title": "Nome",
+            "type": "string",
+            "description": "Nome completo do colaborador"
+          },
+          "colaborador_cpf": {
+            "title": "Colaborador Cpf",
+            "type": "string",
+            "description": "CPF do colaborador (chave de cruzamento com o Omie)"
+          },
+          "cargo": {
+            "title": "Cargo",
+            "type": "string",
+            "description": "Cargo atual"
+          },
+          "departamento": {
+            "title": "Departamento",
+            "type": "string",
+            "description": "Área/Departamento de alocação"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string",
+            "description": "Status contratual do colaborador"
+          },
+          "data_admissao": {
+            "title": "Data Admissao",
+            "type": "string",
+            "description": "Data de admissão (YYYY-MM-DD)"
+          },
+          "salario_base": {
+            "title": "Salario Base",
+            "type": "number",
+            "description": "Salário bruto base mensal em R$"
+          },
+          "beneficios_fixos": {
+            "$ref": "#/components/schemas/BeneficiosFixos"
+          },
+          "total_beneficios_fixos": {
+            "title": "Total Beneficios Fixos",
+            "type": "number",
+            "description": "Soma dos benefícios fixos mensais em R$"
+          }
+        }
+      }
+    }
+  }
+}
