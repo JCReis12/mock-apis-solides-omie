@@ -1,0 +1,45 @@
+{
+  "12345678900": {
+    "2026-10": [
+      {
+        "id_lancamento": "OMIE-202610-001",
+        "data_lancamento": "2026-10-08",
+        "categoria": "Viagens Corporativas",
+        "origem_integracao": "Onfly - Refund",
+        "descricao": "Passagem aérea e deslocamento para reunião presencial em São Paulo",
+        "valor": 940.50,
+        "status_pagamento": "Pago"
+      },
+      {
+        "id_lancamento": "OMIE-202610-002",
+        "data_lancamento": "2026-10-15",
+        "categoria": "Reembolso de Despesas",
+        "origem_integracao": "Flash - Gestão de Despesas",
+        "descricao": "Alimentação e táxi durante evento técnico",
+        "valor": 285.00,
+        "status_pagamento": "Pago"
+      },
+      {
+        "id_lancamento": "OMIE-202610-003",
+        "data_lancamento": "2026-10-22",
+        "categoria": "Hospedagem",
+        "origem_integracao": "Onfly - Refund",
+        "descricao": "Diária de hotel em São Paulo (1 noite)",
+        "valor": 420.00,
+        "status_pagamento": "Pago"
+      }
+    ],
+    "2026-09": [
+      {
+        "id_lancamento": "OMIE-202609-001",
+        "data_lancamento": "2026-09-12",
+        "categoria": "Reembolso de Despesas",
+        "origem_integracao": "Flash - Gestão de Despesas",
+        "descricao": "Compra de periférico autorizado (headset corporativo)",
+        "valor": 310.00,
+        "status_pagamento": "Pago"
+      }
+    ]
+  },
+  "98765432111": {}
+}
