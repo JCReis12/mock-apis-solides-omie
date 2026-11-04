@@ -20,7 +20,6 @@ app = FastAPI(
         "cadastrais, salário base, benefícios fixos e CPF do colaborador."
     ),
     version="1.0.0",
-    openapi_version="3.0.2",
     servers=[
         {
             "url": PUBLIC_SERVER_URL,
@@ -28,6 +27,7 @@ app = FastAPI(
         }
     ],
 )
+app.openapi_version = "3.0.2"
 
 DB_FILE = FilePath(__file__).parent / "db_solides.json"
 
