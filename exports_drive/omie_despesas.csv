@@ -1,0 +1,5 @@
+fonte,colaborador_cpf,periodo,id_lancamento,data_lancamento,categoria,origem_integracao,descricao,valor,status_pagamento
+Omie ERP Financeiro (Mock REST),123.456.789-00,2026-09,OMIE-202609-001,2026-09-12,Reembolso de Despesas,Flash - Gestão de Despesas,Compra de periférico autorizado (headset corporativo),310.0,Pago
+Omie ERP Financeiro (Mock REST),123.456.789-00,2026-10,OMIE-202610-001,2026-10-08,Viagens Corporativas,Onfly - Refund,Passagem aérea e deslocamento para reunião presencial em São Paulo,940.5,Pago
+Omie ERP Financeiro (Mock REST),123.456.789-00,2026-10,OMIE-202610-002,2026-10-15,Reembolso de Despesas,Flash - Gestão de Despesas,Alimentação e táxi durante evento técnico,285.0,Pago
+Omie ERP Financeiro (Mock REST),123.456.789-00,2026-10,OMIE-202610-003,2026-10-22,Hospedagem,Onfly - Refund,Diária de hotel em São Paulo (1 noite),420.0,Pago
