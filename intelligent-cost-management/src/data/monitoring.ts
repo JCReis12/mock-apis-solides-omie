@@ -1,5 +1,5 @@
 import { ecosystemServices } from './ecosystem'
-import { agentWorkflow } from './agentWorkflow'
+import connectedApps from './mocks/connected-apps.json' with { type: 'json' }
 import type {
   MonitoringSnapshot,
   MonitoredSystem,
@@ -34,6 +34,14 @@ export const monitoredSystems: readonly MonitoredSystem[] = [
     area: 'Automação',
     target: 'Execuções e quatro nós do workflow',
     scopeLabel: 'Gemini Enterprise · publicação pendente',
+  },
+  {
+    id: 'onfly',
+    name: 'Onfly',
+    area: 'Financeiro',
+    target:
+      'Viagens e hospedagens usadas como despesas variáveis na demonstração financeira.',
+    scopeLabel: 'Origem de despesas · integração real não confirmada',
   },
   {
     id: 'frontend',
@@ -85,91 +93,8 @@ export function inventorySnapshot(): MonitoringSnapshot {
 }
 
 // Referência fixa e fictícia. Nunca representa uma consulta aos fornecedores.
-export const demoReference = '2026-11-05T15:00:00.000Z'
-const demoExpiresAt = '2026-11-05T15:02:00.000Z'
-function sampleObservation(
-  systemId: string,
-  samples: { ok: boolean; duration: number }[],
-  health: SystemObservation['health'],
-): SystemObservation {
-  const durations = samples.map((s) => s.duration).sort((a, b) => a - b)
-  const successes = samples.filter((s) => s.ok).length
-  return {
-    systemId,
-    health,
-    integrationState: 'enabled',
-    reason: null,
-    source: 'Coletor fictício · cenário local',
-    observedAt: demoReference,
-    expiresAt: demoExpiresAt,
-    windowSeconds: 3600,
-    metrics: {
-      availabilityPercent: (successes / samples.length) * 100,
-      latencyP95Ms: durations[Math.ceil(durations.length * 0.95) - 1],
-      errorRatePercent: ((samples.length - successes) / samples.length) * 100,
-    },
-  }
-}
+export const demoReference = connectedApps.generatedAt
 export function demoSnapshot(): MonitoringSnapshot {
-  const samples = Array.from({ length: 12 }, (_, i) => ({
-    ok: true,
-    duration: 100 + i * 8,
-  }))
-  const snapshot = inventorySnapshot()
-  const simulated = [
-    sampleObservation('solides', samples, 'available'),
-    sampleObservation(
-      'omie',
-      samples.map((s, i) => ({
-        ok: i !== 10,
-        duration: i === 10 ? 1800 : s.duration + 300,
-      })),
-      'degraded',
-    ),
-    sampleObservation(
-      'agent',
-      samples.map((s, i) => ({ ok: i !== 11, duration: s.duration + 600 })),
-      'degraded',
-    ),
-    {
-      ...sampleObservation('vixting', samples, 'available'),
-      integrationState: 'paused' as const,
-    },
-    sampleObservation(
-      'sharepoint',
-      samples.map((s, i) => ({
-        ok: i < 9,
-        duration: i < 9 ? s.duration : 5000,
-      })),
-      'unavailable',
-    ),
-    {
-      ...sampleObservation('flash', samples, 'unknown'),
-      reason: 'auth_error' as const,
-      metrics: emptyMetrics(),
-    },
-    {
-      ...sampleObservation('autentique', samples, 'maintenance'),
-      metrics: emptyMetrics(),
-    },
-  ]
-  return {
-    ...snapshot,
-    mode: 'demo',
-    generatedAt: demoReference,
-    observations: snapshot.observations.map(
-      (o) => simulated.find((s) => s.systemId === o.systemId) || o,
-    ),
-    execution: {
-      id: 'DEMO-EXEC-0042',
-      startedAt: '2026-11-05T14:58:00.000Z',
-      expiresAt: demoExpiresAt,
-      state: 'failed',
-      steps: agentWorkflow.map((step, i) => ({
-        stepId: step.id,
-        state: i < 2 ? 'completed' : i === 2 ? 'failed' : 'skipped',
-        durationMs: i === 0 ? 35 : i === 1 ? 188 : i === 2 ? 1800 : null,
-      })),
-    },
-  }
+  // Cópia independente: o cenário usa seu relógio fixo, sem renovar datas como se fossem coletas reais.
+  return structuredClone(connectedApps) as MonitoringSnapshot
 }

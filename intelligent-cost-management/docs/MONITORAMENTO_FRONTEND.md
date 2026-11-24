@@ -6,7 +6,7 @@ As APIs de RH e Financeiro informadas são **mocks no Render**. O agente está n
 
 ## Comportamento disponível
 
-- Inventário de alvos do backoffice, derivado do mapa de RH e acrescido de Sólides, Omie, agente externo, portal interno e Autentique. Jurídico permanece fora das automações atuais.
+- Inventário de 16 alvos do backoffice, derivado do mapa de RH e acrescido de Sólides, Omie, Onfly, agente externo, portal interno e Autentique. Jurídico permanece fora das automações atuais.
 - Separação entre saúde observada, configuração informada da integração e resultado dos processos.
 - Indicadores e contagem calculados a partir do mesmo recorte filtrado.
 - Busca por nome, área ou processo, com normalização de acentos; filtros por saúde e configuração da integração; limpeza e estado vazio.
@@ -16,7 +16,7 @@ As APIs de RH e Financeiro informadas são **mocks no Render**. O agente está n
 
 ### Dados da coleta
 
-Sem endereço configurado, o front-end não faz requisições de monitoramento. Todos os alvos começam com **Sem telemetria** e integração **Não informado**. Isso não informa se o fornecedor ou conector externo está ligado, desligado ou configurado.
+Sem endereço configurado, o front-end abre o **Cenário demonstrativo** e não faz requisições de monitoramento. Ao selecionar **Dados da coleta**, todos os alvos ficam com **Sem telemetria** e integração **Não informado**. Isso não informa se o fornecedor ou conector externo está ligado, desligado ou configurado.
 
 Com uma API agregada configurada, a interface consulta essa API a cada **30 segundos**, oferece atualização manual e limita cada chamada a **12 segundos**. Requisições pendentes são canceladas ao mudar de modo ou sair da página. O front-end não chama Sólides, Omie ou outros fornecedores diretamente.
 
@@ -24,9 +24,9 @@ Falhas HTTP, de rede, timeout ou de contrato são apresentadas com opção de te
 
 ### Cenário demonstrativo
 
-Ativado explicitamente pelo botão **Cenário demonstrativo**. Usa fixtures determinísticas, com referência fixa em **5 de novembro de 2026, às 12h de Brasília**. Não consulta sistemas externos e não avança como se fosse uma coleta em tempo real.
+Abre por padrão quando `VITE_MONITORING_API_URL` não está configurada; também pode ser selecionado pelo botão **Cenário demonstrativo**. O arquivo versionado `src/data/mocks/connected-apps.json` alimenta os 16 cards e pode ser baixado pelo botão **Baixar dados JSON**. Usa referência fixa em **24 de novembro de 2026, às 12h de Brasília** e indicadores administrativos da competência **10/2026**. Não consulta sistemas externos e não avança como se fosse uma coleta em tempo real.
 
-Os exemplos incluem alvo disponível com integração pausada, erro de autorização sem classificar o fornecedor como indisponível, degradação, falha e manutenção. As taxas e o p95 usam 12 verificações fictícias por alvo em uma janela de uma hora.
+Os exemplos incluem alvo disponível com integração pausada, erro de autorização sem classificar o fornecedor como indisponível, degradação, falha e manutenção. As taxas e o p95 usam 60 verificações fictícias por adaptador em uma janela de uma hora, com histograma e denominadores no JSON. Rotinas manuais ou propostas mantêm métricas técnicas `null`, mas apresentam contadores administrativos fictícios. Consulte [fontes, estrutura e limites da demonstração](DEMONSTRACAO_APPS.md).
 
 A execução fictícia do agente termina com falha na consulta financeira; a Consolidação fica **Não executada**, sem duração inventada. Não há conversa, botão para disparar o agente, controle de fornecedores ou envio de alertas reais.
 

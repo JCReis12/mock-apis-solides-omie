@@ -72,6 +72,24 @@ export function SystemMonitorCard({
           </tr>
         </tbody>
       </table>
+      {demo && system.demo && (
+        <table className="monitor-metrics-table">
+          <caption>Indicadores simulados · competência 10/2026</caption>
+          <tbody>
+            {system.demo.businessMetrics.map((metric) => (
+              <tr key={metric.id}>
+                <th scope="row">{metric.label}</th>
+                <td>
+                  {metric.value.toLocaleString('pt-BR', {
+                    maximumFractionDigits: 2,
+                  })}
+                  {metric.unit === 'ms' ? ' ms' : ''}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       <p className="monitor-observed">
         <Clock3 size={13} aria-hidden="true" />
         {monitoringDate(system.observedAt)}
@@ -84,6 +102,21 @@ export function SystemMonitorCard({
           {system.source || 'Fonte de telemetria não informada.'}
         </p>
         {system.reason && <p>{reasonLabels[system.reason]}</p>}
+        {demo && system.demo && (
+          <>
+            <p>{system.demo.note}</p>
+            <strong>Referências oficiais</strong>
+            {system.demo.officialReferences.map((reference) => (
+              <p key={reference.url}>
+                <a href={reference.url} target="_blank" rel="noreferrer">
+                  {reference.title}
+                </a>
+                {' — '}
+                {reference.supports}
+              </p>
+            ))}
+          </>
+        )}
         {system.expiresAt && (
           <p>Validade da observação: {monitoringDate(system.expiresAt)}.</p>
         )}

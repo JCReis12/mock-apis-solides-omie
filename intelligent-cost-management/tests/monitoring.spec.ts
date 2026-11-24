@@ -1,4 +1,10 @@
 import { expect, test } from '@playwright/test'
+import connectedApps from '../src/data/mocks/connected-apps.json' with { type: 'json' }
+import {
+  employees,
+  variableExpenses,
+  referencePeriod,
+} from '../src/data/people'
 import {
   demoReference,
   demoSnapshot,
@@ -17,6 +23,90 @@ import {
 const now = Date.parse(demoReference)
 const sample = () =>
   demoSnapshot().observations.find((o) => o.systemId === 'solides')!
+
+test('JSON cobre todo o inventário, documenta a origem e reconcilia contadores com a base financeira', () => {
+  expect(connectedApps.mode).toBe('demo')
+  expect(connectedApps.provenance.synthetic).toBe(true)
+  expect(connectedApps.observations.map((o) => o.systemId).sort()).toEqual(
+    monitoredSystems.map((s) => s.id).sort(),
+  )
+  expect(new Set(connectedApps.observations.map((o) => o.systemId)).size).toBe(
+    monitoredSystems.length,
+  )
+  for (const observation of connectedApps.observations) {
+    expect(observation.demo.officialReferences.length).toBeGreaterThan(0)
+    expect(observation.demo.businessMetrics.length).toBeGreaterThan(0)
+    for (const reference of observation.demo.officialReferences) {
+      expect(new URL(reference.url).protocol).toBe('https:')
+      expect(reference.checkedOn).toBe('2026-11-24')
+      expect(reference.supports.length).toBeGreaterThan(20)
+    }
+    for (const metric of observation.demo.businessMetrics) {
+      expect(metric.basis).toBe('project_demo')
+      expect(metric.period).toBe(referencePeriod)
+      expect(Number.isFinite(metric.value) && metric.value >= 0).toBe(true)
+    }
+  }
+  const value = (system: string, metric: string) =>
+    connectedApps.observations
+      .find((o) => o.systemId === system)!
+      .demo.businessMetrics.find((m) => m.id === metric)!.value
+  expect(value('solides', 'employees')).toBe(employees.length)
+  expect(value('solides', 'departments')).toBe(
+    new Set(employees.map((e) => e.departamento)).size,
+  )
+  expect(value('omie', 'expenses')).toBe(
+    variableExpenses.filter((e) => e.periodo === referencePeriod).length,
+  )
+  expect(value('onfly', 'expenses')).toBe(
+    variableExpenses.filter(
+      (e) => e.periodo === referencePeriod && e.origem === 'Onfly',
+    ).length,
+  )
+  expect(value('omie', 'reconciled') + value('omie', 'pending')).toBe(
+    value('omie', 'expenses'),
+  )
+  expect(value('sharepoint', 'backedUp') + value('sharepoint', 'pending')).toBe(
+    value('sharepoint', 'documents'),
+  )
+  expect(value('autentique', 'signed') + value('autentique', 'pending')).toBe(
+    value('autentique', 'documents'),
+  )
+})
+
+test('recalcular taxas e percentil pelo histograma do JSON sem inventar métricas para fluxos manuais', () => {
+  for (const observation of connectedApps.observations) {
+    const checks = observation.demo.checks
+    if (!checks) {
+      expect(Object.values(observation.metrics).every((v) => v === null)).toBe(
+        true,
+      )
+      expect(observation.observedAt).toBeNull()
+      continue
+    }
+    expect(checks.successful + checks.failed).toBe(checks.total)
+    expect(
+      (Date.parse(checks.periodEnd) - Date.parse(checks.periodStart)) / 1000,
+    ).toBe(observation.windowSeconds)
+    const durations = checks.durationHistogram
+      .flatMap((bucket) => Array<number>(bucket.count).fill(bucket.durationMs))
+      .sort((a, b) => a - b)
+    expect(durations).toHaveLength(checks.total)
+    if (observation.metrics.latencyP95Ms === null) continue
+    expect(observation.metrics.latencyP95Ms).toBe(
+      durations[Math.ceil(checks.total * 0.95) - 1],
+    )
+    expect(observation.metrics.availabilityPercent).toBeCloseTo(
+      (100 * checks.successful) / checks.total,
+    )
+    expect(observation.metrics.errorRatePercent).toBeCloseTo(
+      (100 * checks.failed) / checks.total,
+    )
+  }
+  const copy = demoSnapshot()
+  copy.observations[0].metrics.availabilityPercent = 0
+  expect(sample().metrics.availabilityPercent).toBe(100)
+})
 
 test('não atribuir saúde ou configuração às ferramentas sem coleta', () => {
   const systems = systemMonitors(inventorySnapshot(), now)

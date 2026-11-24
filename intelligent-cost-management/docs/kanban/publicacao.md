@@ -1,5 +1,19 @@
 # Publicação das tarefas de front-end no GitHub
 
+## Revisão de 24/11/2026 — aplicativos demonstrativos
+
+Atualização aplicada e verificada em [GitHub Projects](https://github.com/users/Jukamargo/projects/2): **134 cartões**, distribuídos em 121 A validar, 11 A fazer, 1 Em andamento e 1 Concluído.
+
+- [#133 — GC-DEMO-001](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/133): JSON demonstrativo dos 16 alvos e referências oficiais, em A validar.
+- [#134 — GC-DEMO-002](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/134): indicadores por aplicativo e download JSON, em A validar.
+- [#135 — GC-DEMO-003](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/135): validação local de dados e interface, em A validar.
+
+As integrações reais #121 e #123 foram movidas de Em andamento para A fazer devido aos acessos externos pendentes. As notas de #124, #127, #129 e #131 distinguem a demonstração da operação real. Os outros cartões mantêm seus status e nenhum estado de issue foi alterado. As entregas de código estão locais, sem commit, push ou deploy nesta atualização.
+
+Evidência local: 19 testes de dados e três de interface responsiva aprovados; lint e build aprovados. Também foram exercitados os dois testes existentes do contrato de coleta externa por respostas interceptadas, sem consultar APIs dos fornecedores. Referências, cálculos e limites estão em [DEMONSTRACAO_APPS.md](../DEMONSTRACAO_APPS.md). O plano e o script de reconciliação estão descritos no [guia do Kanban](README.md).
+
+## Histórico da publicação original
+
 Repositório: [Jukamargo/frontend-pi-gestao-de-custos](https://github.com/Jukamargo/frontend-pi-gestao-de-custos).
 
 **120 issues exclusivas de front-end verificadas pela API**, com títulos, descrições, tabelas de informações, critérios de aceite e rótulos de área e prioridade correspondentes ao backlog local.

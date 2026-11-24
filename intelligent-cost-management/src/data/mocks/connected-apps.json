@@ -1,0 +1,1360 @@
+{
+  "schemaVersion": 1,
+  "mode": "demo",
+  "generatedAt": "2026-11-24T15:00:00.000Z",
+  "provenance": {
+    "organizationContext": "2RPnet / Inovanet",
+    "synthetic": true,
+    "description": "Funcionalidades baseadas em fontes oficiais. Todos os valores, incidentes, estados e execuções são fictícios; não são telemetria pública coletada nem dados reais da empresa.",
+    "businessPeriod": "2026-10",
+    "metricDefinitions": {
+      "availabilityPercent": "100 × verificações bem-sucedidas / total de verificações fictícias.",
+      "errorRatePercent": "100 × verificações com falha / total de verificações fictícias.",
+      "latencyP95Ms": "Percentil 95 pelo método nearest-rank de todas as durações fictícias, incluindo falhas.",
+      "businessMetrics": "Indicadores administrativos do cenário, definidos pelo projeto a partir dos recursos descritos nas fontes; não são nomes de campos oficiais."
+    }
+  },
+  "observations": [
+    {
+      "systemId": "solides",
+      "health": "available",
+      "integrationState": "enabled",
+      "reason": null,
+      "source": "Adaptador fictício local · sem requisições ao fornecedor",
+      "observedAt": "2026-11-24T15:00:00.000Z",
+      "expiresAt": "2026-11-24T15:02:00.000Z",
+      "windowSeconds": 3600,
+      "metrics": {
+        "availabilityPercent": 100,
+        "latencyP95Ms": 288,
+        "errorRatePercent": 0
+      },
+      "lastHttpStatus": 200,
+      "lastCheckDurationMs": 288,
+      "demo": {
+        "collectionMethod": "documented_api",
+        "note": "Exemplo local; acesso real e contrato da empresa não foram confirmados.",
+        "officialReferences": [
+          {
+            "title": "Sólides — API de Gestão",
+            "url": "https://gestaoapidocs.solides.com.br/",
+            "supports": "Ficha do colaborador, cargos, departamentos e autenticação por token.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "employees",
+            "label": "Colaboradores na base fictícia",
+            "value": 120,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "departments",
+            "label": "Departamentos",
+            "value": 4,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Atualizações pendentes",
+            "value": 2,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": {
+          "total": 60,
+          "successful": 60,
+          "failed": 0,
+          "durationHistogram": [
+            {
+              "durationMs": 180,
+              "count": 6
+            },
+            {
+              "durationMs": 192,
+              "count": 6
+            },
+            {
+              "durationMs": 204,
+              "count": 6
+            },
+            {
+              "durationMs": 216,
+              "count": 6
+            },
+            {
+              "durationMs": 228,
+              "count": 6
+            },
+            {
+              "durationMs": 240,
+              "count": 6
+            },
+            {
+              "durationMs": 252,
+              "count": 6
+            },
+            {
+              "durationMs": 264,
+              "count": 6
+            },
+            {
+              "durationMs": 276,
+              "count": 6
+            },
+            {
+              "durationMs": 288,
+              "count": 6
+            }
+          ],
+          "percentileMethod": "nearest-rank",
+          "periodStart": "2026-11-24T14:00:00.000Z",
+          "periodEnd": "2026-11-24T15:00:00.000Z"
+        }
+      }
+    },
+    {
+      "systemId": "omie",
+      "health": "degraded",
+      "integrationState": "enabled",
+      "reason": null,
+      "source": "Adaptador fictício local · sem requisições ao fornecedor",
+      "observedAt": "2026-11-24T15:00:00.000Z",
+      "expiresAt": "2026-11-24T15:02:00.000Z",
+      "windowSeconds": 3600,
+      "metrics": {
+        "availabilityPercent": 98.33333333333333,
+        "latencyP95Ms": 568,
+        "errorRatePercent": 1.6666666666666667
+      },
+      "lastHttpStatus": 503,
+      "lastCheckDurationMs": 5000,
+      "demo": {
+        "collectionMethod": "documented_api",
+        "note": "Exemplo local; acesso real e contrato da empresa não foram confirmados.",
+        "officialReferences": [
+          {
+            "title": "Omie — catálogo de APIs",
+            "url": "https://developer.omie.com.br/service-list/",
+            "supports": "Cadastros, departamentos, contas a pagar e movimentos financeiros.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "expenses",
+            "label": "Despesas na competência",
+            "value": 360,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "reconciled",
+            "label": "Despesas conciliadas",
+            "value": 357,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Despesas a conciliar",
+            "value": 3,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": {
+          "total": 60,
+          "successful": 59,
+          "failed": 1,
+          "durationHistogram": [
+            {
+              "durationMs": 460,
+              "count": 6
+            },
+            {
+              "durationMs": 472,
+              "count": 6
+            },
+            {
+              "durationMs": 484,
+              "count": 6
+            },
+            {
+              "durationMs": 496,
+              "count": 6
+            },
+            {
+              "durationMs": 508,
+              "count": 6
+            },
+            {
+              "durationMs": 520,
+              "count": 6
+            },
+            {
+              "durationMs": 532,
+              "count": 6
+            },
+            {
+              "durationMs": 544,
+              "count": 6
+            },
+            {
+              "durationMs": 556,
+              "count": 6
+            },
+            {
+              "durationMs": 568,
+              "count": 5
+            },
+            {
+              "durationMs": 5000,
+              "count": 1
+            }
+          ],
+          "percentileMethod": "nearest-rank",
+          "periodStart": "2026-11-24T14:00:00.000Z",
+          "periodEnd": "2026-11-24T15:00:00.000Z"
+        }
+      }
+    },
+    {
+      "systemId": "agent",
+      "health": "degraded",
+      "integrationState": "enabled",
+      "reason": null,
+      "source": "Adaptador fictício local · sem requisições ao fornecedor",
+      "observedAt": "2026-11-24T15:00:00.000Z",
+      "expiresAt": "2026-11-24T15:02:00.000Z",
+      "windowSeconds": 3600,
+      "metrics": {
+        "availabilityPercent": 98.33333333333333,
+        "latencyP95Ms": 1008,
+        "errorRatePercent": 1.6666666666666667
+      },
+      "lastHttpStatus": 503,
+      "lastCheckDurationMs": 5000,
+      "demo": {
+        "collectionMethod": "project_simulation",
+        "note": "Exemplo local; acesso real e contrato da empresa não foram confirmados.",
+        "officialReferences": [
+          {
+            "title": "Google — Gemini Enterprise",
+            "url": "https://docs.cloud.google.com/gemini/enterprise/docs",
+            "supports": "Plataforma de agentes e conectores; os quatro nós e seus contadores são definidos pelo projeto.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "runs",
+            "label": "Execuções fictícias",
+            "value": 24,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "completed",
+            "label": "Execuções concluídas",
+            "value": 23,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "failed",
+            "label": "Execuções com falha",
+            "value": 1,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": {
+          "total": 60,
+          "successful": 59,
+          "failed": 1,
+          "durationHistogram": [
+            {
+              "durationMs": 900,
+              "count": 6
+            },
+            {
+              "durationMs": 912,
+              "count": 6
+            },
+            {
+              "durationMs": 924,
+              "count": 6
+            },
+            {
+              "durationMs": 936,
+              "count": 6
+            },
+            {
+              "durationMs": 948,
+              "count": 6
+            },
+            {
+              "durationMs": 960,
+              "count": 6
+            },
+            {
+              "durationMs": 972,
+              "count": 6
+            },
+            {
+              "durationMs": 984,
+              "count": 6
+            },
+            {
+              "durationMs": 996,
+              "count": 6
+            },
+            {
+              "durationMs": 1008,
+              "count": 5
+            },
+            {
+              "durationMs": 5000,
+              "count": 1
+            }
+          ],
+          "percentileMethod": "nearest-rank",
+          "periodStart": "2026-11-24T14:00:00.000Z",
+          "periodEnd": "2026-11-24T15:00:00.000Z"
+        }
+      }
+    },
+    {
+      "systemId": "frontend",
+      "health": "available",
+      "integrationState": "enabled",
+      "reason": null,
+      "source": "Adaptador fictício local · sem requisições ao fornecedor",
+      "observedAt": "2026-11-24T15:00:00.000Z",
+      "expiresAt": "2026-11-24T15:02:00.000Z",
+      "windowSeconds": 3600,
+      "metrics": {
+        "availabilityPercent": 100,
+        "latencyP95Ms": 198,
+        "errorRatePercent": 0
+      },
+      "lastHttpStatus": 200,
+      "lastCheckDurationMs": 198,
+      "demo": {
+        "collectionMethod": "project_simulation",
+        "note": "Exemplo local; acesso real e contrato da empresa não foram confirmados.",
+        "officialReferences": [
+          {
+            "title": "Google — Web Vitals",
+            "url": "https://web.dev/articles/vitals",
+            "supports": "LCP, INP e CLS são indicadores de experiência, avaliados no percentil 75; não são latência p95 da API.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "lcp",
+            "label": "LCP p75 simulado",
+            "value": 1840,
+            "unit": "ms",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "inp",
+            "label": "INP p75 simulado",
+            "value": 128,
+            "unit": "ms",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "cls",
+            "label": "CLS p75 simulado",
+            "value": 0.04,
+            "unit": "índice",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": {
+          "total": 60,
+          "successful": 60,
+          "failed": 0,
+          "durationHistogram": [
+            {
+              "durationMs": 90,
+              "count": 6
+            },
+            {
+              "durationMs": 102,
+              "count": 6
+            },
+            {
+              "durationMs": 114,
+              "count": 6
+            },
+            {
+              "durationMs": 126,
+              "count": 6
+            },
+            {
+              "durationMs": 138,
+              "count": 6
+            },
+            {
+              "durationMs": 150,
+              "count": 6
+            },
+            {
+              "durationMs": 162,
+              "count": 6
+            },
+            {
+              "durationMs": 174,
+              "count": 6
+            },
+            {
+              "durationMs": 186,
+              "count": 6
+            },
+            {
+              "durationMs": 198,
+              "count": 6
+            }
+          ],
+          "percentileMethod": "nearest-rank",
+          "periodStart": "2026-11-24T14:00:00.000Z",
+          "periodEnd": "2026-11-24T15:00:00.000Z"
+        }
+      }
+    },
+    {
+      "systemId": "saude",
+      "health": "unknown",
+      "integrationState": "not_configured",
+      "reason": "not_configured",
+      "source": "Arquivo administrativo fictício · sem coleta técnica",
+      "observedAt": null,
+      "expiresAt": null,
+      "windowSeconds": null,
+      "metrics": {
+        "availabilityPercent": null,
+        "latencyP95Ms": null,
+        "errorRatePercent": null
+      },
+      "lastHttpStatus": null,
+      "lastCheckDurationMs": null,
+      "demo": {
+        "collectionMethod": "manual_export",
+        "note": "Contadores administrativos de duas fontes distintas. Nenhum dado clínico ou uso individual é simulado.",
+        "officialReferences": [
+          {
+            "title": "SulAmérica — movimentação de beneficiários",
+            "url": "https://www.sulamerica.com.br/saude/0073_0001_0297_cond_gerais_fit.pdf",
+            "supports": "Inclusão/exclusão cadastral de beneficiários; referência de processo, sem validar contrato ou API da empresa.",
+            "checkedOn": "2026-11-24"
+          },
+          {
+            "title": "Wellhub — gestão e indicadores de programas",
+            "url": "https://wellhub.com/pt-br/blog/beneficios-e-programas-de-bem-estar/portais-de-bem-estar-corporativo/",
+            "supports": "Elegibilidade, movimentações e indicadores de cadastro; referência conceitual, sem validar API.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "insured",
+            "label": "Beneficiários SulAmérica",
+            "value": 120,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "eligible",
+            "label": "Elegíveis Wellhub",
+            "value": 120,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "registered",
+            "label": "Cadastrados Wellhub",
+            "value": 84,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": null
+      }
+    },
+    {
+      "systemId": "porto-seguro",
+      "health": "unknown",
+      "integrationState": "not_configured",
+      "reason": "not_configured",
+      "source": "Arquivo administrativo fictício · sem coleta técnica",
+      "observedAt": null,
+      "expiresAt": null,
+      "windowSeconds": null,
+      "metrics": {
+        "availabilityPercent": null,
+        "latencyP95Ms": null,
+        "errorRatePercent": null
+      },
+      "lastHttpStatus": null,
+      "lastCheckDurationMs": null,
+      "demo": {
+        "collectionMethod": "manual_export",
+        "note": "Somente seguro de vida, conforme o escopo local. Nenhum contrato de API da empresa foi confirmado.",
+        "officialReferences": [
+          {
+            "title": "Porto — seguro de vida empresarial",
+            "url": "https://venda.portoseguro.com.br/seguro-de-vida-para-empresas",
+            "supports": "Oferta de seguro de vida empresarial; sem contrato público de API validado.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "insured",
+            "label": "Vidas na relação fictícia",
+            "value": 120,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Movimentações pendentes",
+            "value": 2,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": null
+      }
+    },
+    {
+      "systemId": "flash",
+      "health": "unknown",
+      "integrationState": "enabled",
+      "reason": "auth_error",
+      "source": "Adaptador fictício local · sem requisições ao fornecedor",
+      "observedAt": "2026-11-24T15:00:00.000Z",
+      "expiresAt": "2026-11-24T15:02:00.000Z",
+      "windowSeconds": 3600,
+      "metrics": {
+        "availabilityPercent": null,
+        "latencyP95Ms": null,
+        "errorRatePercent": null
+      },
+      "lastHttpStatus": 401,
+      "lastCheckDurationMs": 5000,
+      "demo": {
+        "collectionMethod": "documented_api",
+        "note": "Cenário de token recusado. Os contadores pertencem ao arquivo demonstrativo, não à tentativa de consulta.",
+        "officialReferences": [
+          {
+            "title": "Flash — manual de integração",
+            "url": "https://docs.api.flashapp.services/",
+            "supports": "Cadastro, consulta, convites e exclusão de colaboradores.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "registered",
+            "label": "Cadastros na última base fictícia",
+            "value": 115,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Convites pendentes",
+            "value": 5,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": {
+          "total": 60,
+          "successful": 0,
+          "failed": 60,
+          "durationHistogram": [
+            {
+              "durationMs": 5000,
+              "count": 60
+            }
+          ],
+          "percentileMethod": "nearest-rank",
+          "periodStart": "2026-11-24T14:00:00.000Z",
+          "periodEnd": "2026-11-24T15:00:00.000Z"
+        }
+      }
+    },
+    {
+      "systemId": "vixting",
+      "health": "available",
+      "integrationState": "paused",
+      "reason": null,
+      "source": "Adaptador fictício local · sem requisições ao fornecedor",
+      "observedAt": "2026-11-24T15:00:00.000Z",
+      "expiresAt": "2026-11-24T15:02:00.000Z",
+      "windowSeconds": 3600,
+      "metrics": {
+        "availabilityPercent": 100,
+        "latencyP95Ms": 398,
+        "errorRatePercent": 0
+      },
+      "lastHttpStatus": 200,
+      "lastCheckDurationMs": 398,
+      "demo": {
+        "collectionMethod": "project_simulation",
+        "note": "Saúde do adaptador fictício e integração pausada são independentes. Ponto → Sólides segue proposta local, sem contrato validado.",
+        "officialReferences": [
+          {
+            "title": "Vixting — saúde ocupacional",
+            "url": "https://www.vixting.com.br/gestao-de-saude-ocupacional/",
+            "supports": "Agendamentos, ASOs e acompanhamento de atestados e absenteísmo; contrato de API não validado.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "admissions",
+            "label": "Admissões acompanhadas",
+            "value": 8,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "certificates",
+            "label": "Atestados recebidos",
+            "value": 14,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Documentos pendentes",
+            "value": 2,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": {
+          "total": 60,
+          "successful": 60,
+          "failed": 0,
+          "durationHistogram": [
+            {
+              "durationMs": 290,
+              "count": 6
+            },
+            {
+              "durationMs": 302,
+              "count": 6
+            },
+            {
+              "durationMs": 314,
+              "count": 6
+            },
+            {
+              "durationMs": 326,
+              "count": 6
+            },
+            {
+              "durationMs": 338,
+              "count": 6
+            },
+            {
+              "durationMs": 350,
+              "count": 6
+            },
+            {
+              "durationMs": 362,
+              "count": 6
+            },
+            {
+              "durationMs": 374,
+              "count": 6
+            },
+            {
+              "durationMs": 386,
+              "count": 6
+            },
+            {
+              "durationMs": 398,
+              "count": 6
+            }
+          ],
+          "percentileMethod": "nearest-rank",
+          "periodStart": "2026-11-24T14:00:00.000Z",
+          "periodEnd": "2026-11-24T15:00:00.000Z"
+        }
+      }
+    },
+    {
+      "systemId": "clude",
+      "health": "unknown",
+      "integrationState": "not_configured",
+      "reason": "not_configured",
+      "source": "Arquivo administrativo fictício · sem coleta técnica",
+      "observedAt": null,
+      "expiresAt": null,
+      "windowSeconds": null,
+      "metrics": {
+        "availabilityPercent": null,
+        "latencyP95Ms": null,
+        "errorRatePercent": null
+      },
+      "lastHttpStatus": null,
+      "lastCheckDurationMs": null,
+      "demo": {
+        "collectionMethod": "manual_export",
+        "note": "Exemplo local; acesso real e contrato da empresa não foram confirmados.",
+        "officialReferences": [
+          {
+            "title": "Clude — plataforma corporativa",
+            "url": "https://clude.com.br/clude/",
+            "supports": "Benefícios e gestão de saúde corporativa; contrato público de API não validado.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "registered",
+            "label": "Cadastros administrativos",
+            "value": 116,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Cadastros pendentes",
+            "value": 4,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": null
+      }
+    },
+    {
+      "systemId": "alura",
+      "health": "unknown",
+      "integrationState": "not_configured",
+      "reason": "not_configured",
+      "source": "Arquivo administrativo fictício · sem coleta técnica",
+      "observedAt": null,
+      "expiresAt": null,
+      "windowSeconds": null,
+      "metrics": {
+        "availabilityPercent": null,
+        "latencyP95Ms": null,
+        "errorRatePercent": null
+      },
+      "lastHttpStatus": null,
+      "lastCheckDurationMs": null,
+      "demo": {
+        "collectionMethod": "manual_export",
+        "note": "Mantida a restrição do fluxo da equipe: solicitação de licença por e-mail. Não há automação direta habilitada.",
+        "officialReferences": [
+          {
+            "title": "Alura — relatório de licenças",
+            "url": "https://suporte-empresas.alura.com.br/relat%C3%B3rio-de-licen%C3%A7as",
+            "supports": "Licenças, cursos e última atividade; exportação CSV/XLS; API condicionada ao plano, sem confirmar acesso da empresa.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "assigned",
+            "label": "Licenças atribuídas",
+            "value": 76,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "available",
+            "label": "Licenças disponíveis",
+            "value": 4,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "requests",
+            "label": "Solicitações à administração",
+            "value": 3,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": null
+      }
+    },
+    {
+      "systemId": "senai",
+      "health": "unknown",
+      "integrationState": "not_configured",
+      "reason": "not_configured",
+      "source": "Arquivo administrativo fictício · sem coleta técnica",
+      "observedAt": null,
+      "expiresAt": null,
+      "windowSeconds": null,
+      "metrics": {
+        "availabilityPercent": null,
+        "latencyP95Ms": null,
+        "errorRatePercent": null
+      },
+      "lastHttpStatus": null,
+      "lastCheckDurationMs": null,
+      "demo": {
+        "collectionMethod": "manual_export",
+        "note": "Processo em análise. Os números não comprovam matrícula ou API da unidade usada pela empresa.",
+        "officialReferences": [
+          {
+            "title": "SENAI-SP — orientações de matrícula",
+            "url": "https://www.sp.senai.br/unidade/bauru/duvidas-e-orientacoes",
+            "supports": "Inscrição, matrícula e documentação; processo varia por unidade, sem contrato público de API validado.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "forms",
+            "label": "Formulários recebidos",
+            "value": 12,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "enrolled",
+            "label": "Matrículas confirmadas",
+            "value": 9,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Formulários em análise",
+            "value": 3,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": null
+      }
+    },
+    {
+      "systemId": "sharepoint",
+      "health": "unavailable",
+      "integrationState": "enabled",
+      "reason": null,
+      "source": "Adaptador fictício local · sem requisições ao fornecedor",
+      "observedAt": "2026-11-24T15:00:00.000Z",
+      "expiresAt": "2026-11-24T15:02:00.000Z",
+      "windowSeconds": 3600,
+      "metrics": {
+        "availabilityPercent": 75,
+        "latencyP95Ms": 5000,
+        "errorRatePercent": 25
+      },
+      "lastHttpStatus": 503,
+      "lastCheckDurationMs": 5000,
+      "demo": {
+        "collectionMethod": "documented_api",
+        "note": "Falha do destino fictício de backup; não indica incidente real no Microsoft 365.",
+        "officialReferences": [
+          {
+            "title": "Microsoft Graph — arquivos e bibliotecas",
+            "url": "https://learn.microsoft.com/en-us/graph/api/resources/driveitem",
+            "supports": "Arquivos e pastas de bibliotecas do SharePoint.",
+            "checkedOn": "2026-11-24"
+          },
+          {
+            "title": "Microsoft Graph — limitação de requisições",
+            "url": "https://learn.microsoft.com/graph/throttling",
+            "supports": "HTTP 429 e Retry-After; não confundir limitação com queda do fornecedor.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "documents",
+            "label": "Documentos previstos para backup",
+            "value": 48,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "backedUp",
+            "label": "Backups concluídos",
+            "value": 36,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Backups pendentes",
+            "value": 12,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": {
+          "total": 60,
+          "successful": 45,
+          "failed": 15,
+          "durationHistogram": [
+            {
+              "durationMs": 380,
+              "count": 5
+            },
+            {
+              "durationMs": 392,
+              "count": 5
+            },
+            {
+              "durationMs": 404,
+              "count": 5
+            },
+            {
+              "durationMs": 416,
+              "count": 5
+            },
+            {
+              "durationMs": 428,
+              "count": 5
+            },
+            {
+              "durationMs": 440,
+              "count": 4
+            },
+            {
+              "durationMs": 452,
+              "count": 4
+            },
+            {
+              "durationMs": 464,
+              "count": 4
+            },
+            {
+              "durationMs": 476,
+              "count": 4
+            },
+            {
+              "durationMs": 488,
+              "count": 4
+            },
+            {
+              "durationMs": 5000,
+              "count": 15
+            }
+          ],
+          "percentileMethod": "nearest-rank",
+          "periodStart": "2026-11-24T14:00:00.000Z",
+          "periodEnd": "2026-11-24T15:00:00.000Z"
+        }
+      }
+    },
+    {
+      "systemId": "sindpd",
+      "health": "unknown",
+      "integrationState": "not_configured",
+      "reason": "not_configured",
+      "source": "Arquivo administrativo fictício · sem coleta técnica",
+      "observedAt": null,
+      "expiresAt": null,
+      "windowSeconds": null,
+      "metrics": {
+        "availabilityPercent": null,
+        "latencyP95Ms": null,
+        "errorRatePercent": null
+      },
+      "lastHttpStatus": null,
+      "lastCheckDurationMs": null,
+      "demo": {
+        "collectionMethod": "email_workflow",
+        "note": "Nenhum e-mail foi enviado. Fluxo local proposto; não existe API do Sindpd confirmada.",
+        "officialReferences": [
+          {
+            "title": "Sindpd — atendimento",
+            "url": "https://sindpd.org.br/atendimento/",
+            "supports": "Canais de atendimento; fila de e-mails é uma proposta local, não uma API do sindicato.",
+            "checkedOn": "2026-11-24"
+          },
+          {
+            "title": "Microsoft Graph — recurso message",
+            "url": "https://learn.microsoft.com/en-us/graph/api/resources/message",
+            "supports": "Mensagens em caixas de e-mail; fornecedor de e-mail da empresa não confirmado.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "queued",
+            "label": "Mensagens na fila proposta",
+            "value": 6,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "sent",
+            "label": "Envios simulados",
+            "value": 4,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Mensagens pendentes",
+            "value": 2,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": null
+      }
+    },
+    {
+      "systemId": "email-solides",
+      "health": "unknown",
+      "integrationState": "not_configured",
+      "reason": "not_configured",
+      "source": "Arquivo administrativo fictício · sem coleta técnica",
+      "observedAt": null,
+      "expiresAt": null,
+      "windowSeconds": null,
+      "metrics": {
+        "availabilityPercent": null,
+        "latencyP95Ms": null,
+        "errorRatePercent": null
+      },
+      "lastHttpStatus": null,
+      "lastCheckDurationMs": null,
+      "demo": {
+        "collectionMethod": "email_workflow",
+        "note": "Padizzi, Limpeza, VT Privado, Seguros e Ourho: origens informadas no projeto. Mapeamento de campos ainda proposto.",
+        "officialReferences": [
+          {
+            "title": "Microsoft Graph — recurso message",
+            "url": "https://learn.microsoft.com/en-us/graph/api/resources/message",
+            "supports": "Mensagens em caixas de e-mail; fornecedor de e-mail da empresa não confirmado.",
+            "checkedOn": "2026-11-24"
+          },
+          {
+            "title": "Sólides — API de Gestão",
+            "url": "https://gestaoapidocs.solides.com.br/",
+            "supports": "Ficha do colaborador, cargos, departamentos e autenticação por token.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "received",
+            "label": "Mensagens de fornecedores",
+            "value": 25,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "mapped",
+            "label": "Mensagens mapeadas",
+            "value": 23,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Mensagens a revisar",
+            "value": 2,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": null
+      }
+    },
+    {
+      "systemId": "autentique",
+      "health": "maintenance",
+      "integrationState": "enabled",
+      "reason": null,
+      "source": "Adaptador fictício local · sem requisições ao fornecedor",
+      "observedAt": "2026-11-24T15:00:00.000Z",
+      "expiresAt": "2026-11-24T15:02:00.000Z",
+      "windowSeconds": 3600,
+      "metrics": {
+        "availabilityPercent": null,
+        "latencyP95Ms": null,
+        "errorRatePercent": null
+      },
+      "lastHttpStatus": 200,
+      "lastCheckDurationMs": 358,
+      "demo": {
+        "collectionMethod": "documented_api",
+        "note": "Manutenção ilustrativa do adaptador; não representa aviso oficial do fornecedor.",
+        "officialReferences": [
+          {
+            "title": "Autentique — webhooks",
+            "url": "https://docs.autentique.com.br/api/integration-basics/webhooks",
+            "supports": "Eventos de documentos e assinaturas, entrega HTTPS/JSON; eventos podem chegar duplicados ou fora de ordem.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "documents",
+            "label": "Documentos criados",
+            "value": 48,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "signed",
+            "label": "Documentos concluídos",
+            "value": 41,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "pending",
+            "label": "Documentos aguardando assinatura",
+            "value": 7,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": {
+          "total": 60,
+          "successful": 60,
+          "failed": 0,
+          "durationHistogram": [
+            {
+              "durationMs": 250,
+              "count": 6
+            },
+            {
+              "durationMs": 262,
+              "count": 6
+            },
+            {
+              "durationMs": 274,
+              "count": 6
+            },
+            {
+              "durationMs": 286,
+              "count": 6
+            },
+            {
+              "durationMs": 298,
+              "count": 6
+            },
+            {
+              "durationMs": 310,
+              "count": 6
+            },
+            {
+              "durationMs": 322,
+              "count": 6
+            },
+            {
+              "durationMs": 334,
+              "count": 6
+            },
+            {
+              "durationMs": 346,
+              "count": 6
+            },
+            {
+              "durationMs": 358,
+              "count": 6
+            }
+          ],
+          "percentileMethod": "nearest-rank",
+          "periodStart": "2026-11-24T14:00:00.000Z",
+          "periodEnd": "2026-11-24T15:00:00.000Z"
+        }
+      }
+    },
+    {
+      "systemId": "onfly",
+      "health": "available",
+      "integrationState": "enabled",
+      "reason": null,
+      "source": "Adaptador fictício local · sem requisições ao fornecedor",
+      "observedAt": "2026-11-24T15:00:00.000Z",
+      "expiresAt": "2026-11-24T15:02:00.000Z",
+      "windowSeconds": 3600,
+      "metrics": {
+        "availabilityPercent": 100,
+        "latencyP95Ms": 448,
+        "errorRatePercent": 0
+      },
+      "lastHttpStatus": 200,
+      "lastCheckDurationMs": 448,
+      "demo": {
+        "collectionMethod": "documented_api",
+        "note": "Origem das duas despesas Onfly por colaborador na competência da base financeira fictícia.",
+        "officialReferences": [
+          {
+            "title": "Onfly — integração por API",
+            "url": "https://lp.onfly.com.br/ajuda/como-integrar-a-api-da-onfly",
+            "supports": "Despesas, relatórios, colaboradores e centros de custo; acesso depende de plano e credenciais.",
+            "checkedOn": "2026-11-24"
+          }
+        ],
+        "businessMetrics": [
+          {
+            "id": "expenses",
+            "label": "Despesas de viagem e hospedagem",
+            "value": 240,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "travel",
+            "label": "Lançamentos de viagem",
+            "value": 120,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          },
+          {
+            "id": "lodging",
+            "label": "Lançamentos de hospedagem",
+            "value": 120,
+            "unit": "registros",
+            "period": "2026-10",
+            "basis": "project_demo"
+          }
+        ],
+        "checks": {
+          "total": 60,
+          "successful": 60,
+          "failed": 0,
+          "durationHistogram": [
+            {
+              "durationMs": 340,
+              "count": 6
+            },
+            {
+              "durationMs": 352,
+              "count": 6
+            },
+            {
+              "durationMs": 364,
+              "count": 6
+            },
+            {
+              "durationMs": 376,
+              "count": 6
+            },
+            {
+              "durationMs": 388,
+              "count": 6
+            },
+            {
+              "durationMs": 400,
+              "count": 6
+            },
+            {
+              "durationMs": 412,
+              "count": 6
+            },
+            {
+              "durationMs": 424,
+              "count": 6
+            },
+            {
+              "durationMs": 436,
+              "count": 6
+            },
+            {
+              "durationMs": 448,
+              "count": 6
+            }
+          ],
+          "percentileMethod": "nearest-rank",
+          "periodStart": "2026-11-24T14:00:00.000Z",
+          "periodEnd": "2026-11-24T15:00:00.000Z"
+        }
+      }
+    }
+  ],
+  "execution": {
+    "id": "DEMO-EXEC-0042",
+    "startedAt": "2026-11-24T14:59:58.000Z",
+    "expiresAt": "2026-11-24T15:02:00.000Z",
+    "state": "failed",
+    "steps": [
+      {
+        "stepId": "trigger",
+        "state": "completed",
+        "durationMs": 35
+      },
+      {
+        "stepId": "rh",
+        "state": "completed",
+        "durationMs": 188
+      },
+      {
+        "stepId": "finance",
+        "state": "failed",
+        "durationMs": 1800
+      },
+      {
+        "stepId": "consolidation",
+        "state": "skipped",
+        "durationMs": null
+      }
+    ]
+  }
+}

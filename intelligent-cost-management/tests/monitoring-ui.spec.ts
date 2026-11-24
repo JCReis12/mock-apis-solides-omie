@@ -10,6 +10,12 @@ test('monitorar alvos sem atribuir estados reais e explorar o cenário demonstra
     'Monitoramento do backoffice',
   )
   await expect(
+    page.getByRole('status').filter({ hasText: 'Dados fictícios' }),
+  ).toBeVisible()
+  await page
+    .getByRole('button', { name: 'Dados da coleta', exact: true })
+    .click()
+  await expect(
     page.getByRole('status').filter({ hasText: 'Sem coleta conectada' }),
   ).toBeVisible()
   await expect(page.locator('.system-monitor-card')).toHaveCount(
@@ -26,6 +32,25 @@ test('monitorar alvos sem atribuir estados reais e explorar o cenário demonstra
     page.getByRole('status').filter({ hasText: 'Dados fictícios' }),
   ).toBeVisible()
   await expect(solides).toContainText('Disponível')
+  await expect(solides).toContainText('Colaboradores na base fictícia')
+  await expect(solides).toContainText('120')
+  const downloadPromise = page.waitForEvent('download')
+  await page.getByRole('link', { name: 'Baixar dados JSON' }).click()
+  const download = await downloadPromise
+  expect(download.suggestedFilename()).toBe('2rpnet-apps-demonstracao.json')
+  const response = await page.request.get(
+    (await page
+      .getByRole('link', { name: 'Baixar dados JSON' })
+      .getAttribute('href'))!,
+  )
+  const downloaded = await response.json()
+  expect(downloaded.mode).toBe('demo')
+  expect(downloaded.observations).toHaveLength(monitoredSystems.length)
+  for (const system of monitoredSystems) {
+    await expect(
+      page.locator(`#monitor-${system.id}`).locator('..'),
+    ).toContainText('Indicadores simulados')
+  }
   await expect(
     page.getByRole('article', { name: 'SharePoint', exact: true }),
   ).toContainText('Indisponível')
@@ -36,6 +61,9 @@ test('monitorar alvos sem atribuir estados reais e explorar o cenário demonstra
   await flash.getByText('Origem e alvo observado').click()
   await expect(flash).toContainText('Falha de autorização')
   await expect(flash).toContainText('Sem telemetria')
+  await expect(
+    flash.getByRole('link', { name: 'Flash — manual de integração' }),
+  ).toHaveAttribute('href', 'https://docs.api.flashapp.services/')
   const flow = page.locator('.monitor-workflow li')
   await expect(flow).toHaveCount(4)
   await expect(flow.nth(2)).toContainText('Falhou')

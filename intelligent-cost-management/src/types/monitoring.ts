@@ -46,7 +46,26 @@ export interface MonitoringMetrics {
   latencyP95Ms: number | null
   errorRatePercent: number | null
 }
+export interface DemoContext {
+  collectionMethod: string
+  note: string
+  officialReferences: {
+    title: string
+    url: string
+    supports: string
+    checkedOn: string
+  }[]
+  businessMetrics: {
+    id: string
+    label: string
+    value: number
+    unit: string
+    period: string
+    basis: string
+  }[]
+}
 export interface SystemObservation {
+  demo?: DemoContext
   lastCheckDurationMs?: number | null
   lastHttpStatus?: number | null
   systemId: string

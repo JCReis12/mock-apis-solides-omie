@@ -20,6 +20,7 @@ import {
   systemMonitors,
 } from '../../services/monitoringService'
 import { healthLabels, integrationLabels } from '../../types/monitoring'
+import demoJsonUrl from '../../data/mocks/connected-apps.json?url'
 
 export default function Monitoring() {
   const { mode, setMode, configured, snapshot, loading, error, refresh, now } =
@@ -77,6 +78,15 @@ export default function Monitoring() {
             Cenário demonstrativo
           </button>
         </div>
+        {demo && (
+          <a
+            className="button button-secondary"
+            href={demoJsonUrl}
+            download="2rpnet-apps-demonstracao.json"
+          >
+            Baixar dados JSON
+          </a>
+        )}
         {!demo && configured && (
           <button
             className="button button-secondary"
@@ -95,8 +105,10 @@ export default function Monitoring() {
           {demo ? (
             <>
               <strong>Dados fictícios.</strong> Cenário fixo para demonstrar
-              falhas e métricas; não reflete a situação dos fornecedores.
-              Referência: {monitoringDate(snapshot.generatedAt)}.
+              falhas e métricas dos aplicativos mapeados. Os indicadores usam
+              funcionalidades descritas nas fontes oficiais; todos os valores
+              são simulados e não refletem a situação dos fornecedores ou da
+              2RPnet. Referência: {monitoringDate(snapshot.generatedAt)}.
             </>
           ) : configured ? (
             <>
@@ -265,9 +277,11 @@ export default function Monitoring() {
         </p>
         {demo && (
           <p>
-            As taxas e o p95 do cenário usam 12 verificações fictícias por alvo,
-            em uma janela de 1 hora. Os estados ilustram situações distintas;
-            não são alertas operacionais.
+            As taxas e o p95 usam 60 verificações fictícias por adaptador em uma
+            janela de 1 hora. Rotinas sem coleta técnica exibem apenas
+            indicadores administrativos simulados da competência 10/2026. As
+            fontes e os limites de cada exemplo estão nos detalhes do alvo e no
+            JSON.
           </p>
         )}
       </aside>

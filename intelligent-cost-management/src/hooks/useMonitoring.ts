@@ -8,7 +8,12 @@ import { fetchMonitoringSnapshot } from '../services/monitoringService'
 import type { MonitoringSnapshot } from '../types/monitoring'
 
 export function useMonitoring() {
-  const [mode, setMode] = useState<'collection' | 'demo'>('collection')
+  const endpoint = (
+    import.meta.env.VITE_MONITORING_API_URL as string | undefined
+  )?.trim()
+  const [mode, setMode] = useState<'collection' | 'demo'>(
+    endpoint ? 'collection' : 'demo',
+  )
   const [revision, setRevision] = useState(0)
   const [now, setNow] = useState(Date.now)
   const pending = useRef<AbortController | null>(null)
@@ -17,9 +22,6 @@ export function useMonitoring() {
     error: string | null
     loading: boolean
   }>({ snapshot: null, error: null, loading: false })
-  const endpoint = (
-    import.meta.env.VITE_MONITORING_API_URL as string | undefined
-  )?.trim()
   const live = mode === 'collection' && Boolean(endpoint)
 
   useEffect(() => {

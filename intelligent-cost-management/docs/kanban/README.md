@@ -4,6 +4,29 @@ Os **120 cartões solicitados são tarefas exclusivas do front-end no GitHub**, 
 
 Quadro: **[Gestão de custos — Front-end](https://github.com/users/Jukamargo/projects/2)**.
 
+## Atualização de 24/11/2026 — demonstração dos aplicativos
+
+O quadro foi reconciliado e verificado no GitHub: **134 itens**, sendo **121 em A validar**, **11 em A fazer**, **1 em Em andamento** e **1 em Concluído**. As 120 tarefas originais permanecem no quadro, acompanhadas das 11 de telemetria e das três entregas demonstrativas abaixo.
+
+| Entrega                                               | Issue                                                                        | Status    |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------- | --------- |
+| GC-DEMO-001 — JSON dos 16 alvos e fontes oficiais     | [#133](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/133) | A validar |
+| GC-DEMO-002 — indicadores e download no monitoramento | [#134](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/134) | A validar |
+| GC-DEMO-003 — dados, interface responsiva e validação | [#135](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/135) | A validar |
+
+As issues **#121 e #123** saíram de Em andamento para **A fazer**, pois continuam bloqueadas por API agregada e eventos autorizados do agente. As issues **#124, #127, #129 e #131** receberam o contexto atualizado, preservando seus status. A #122 permanece Em andamento: a coleta pontual dos mocks é uma entrega independente. Nenhuma issue foi encerrada, nem recebeu responsável ou prazo nesta atualização.
+
+A implementação da demonstração está no workspace local, com testes aprovados; aceite da equipe e publicação do código continuam pendentes. A demonstração não conclui a homologação de APIs reais. Consulte [as fontes e os limites dos dados](../DEMONSTRACAO_APPS.md).
+
+O plano versionado é `demonstracao-apps.json`. Para inspecionar a reconciliação ou aplicá-la novamente, use, na pasta da aplicação:
+
+```powershell
+node docs/kanban/reconciliar-demonstracao.mjs --plan
+node docs/kanban/reconciliar-demonstracao.mjs --apply
+```
+
+O primeiro comando faz leituras do GitHub e prepara os corpos localmente, sem mutações remotas. O segundo altera somente os cartões e metadados indicados no plano, detecta os marcadores existentes para evitar duplicações, faz backup em `artifacts/kanban-demo/` e verifica os corpos e os status finais. Requer GitHub CLI autenticado com acesso ao repositório e ao Project. O relatório sanitizado fica em `artifacts/kanban-demo/verified.json`. Não executar os modos antigos de atualização para reconstituir esta revisão; eles tratam do backlog original.
+
 ## Uso do quadro
 
 - Abra a visualização **Kanban**, organizada pelo campo Status.

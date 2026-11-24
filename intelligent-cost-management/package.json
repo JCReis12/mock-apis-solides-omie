@@ -10,6 +10,7 @@
     "test": "playwright test",
     "test:data": "playwright test --project=data",
     "monitor:collect": "node scripts/collect-mock-monitoring.mjs",
+    "demo:generate": "node scripts/generate-connected-apps-demo.mjs",
     "format": "prettier --write src tests *.ts *.json index.html README.md",
     "preview": "vite preview"
   },
