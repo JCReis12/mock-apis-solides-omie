@@ -3,6 +3,11 @@ import { costs } from '../src/data/costs'
 import { currency } from '../src/services/costService'
 import { employees, variableExpenses } from '../src/data/people'
 import { consolidateEmployee } from '../src/services/consolidationService'
+import { demoReference, demoSnapshot } from '../src/data/monitoring'
+import {
+  summarizeMonitoring,
+  systemMonitors,
+} from '../src/services/monitoringService'
 
 function luminance(color: string) {
   const channels = (color.match(/[\d.]+/g) ?? [])
@@ -84,7 +89,7 @@ test('reorganizar banner e valores sem cortes nas bordas das resoluções', asyn
     const state = await page.evaluate(() => {
       const elements = [
         ...document.querySelectorAll<HTMLElement>(
-          '.header-inner,.hero-content,.hero-content h1,.hero-buttons,.hero-buttons .button',
+          '.header-inner,.hero-content,.hero-content h1,.hero-buttons,.hero-buttons .button,.hero-telemetry,.hero-telemetry-overview,.hero-telemetry-legend,.hero-telemetry-apps li',
         ),
       ]
       return {
@@ -144,6 +149,59 @@ test('reorganizar banner e valores sem cortes nas bordas das resoluções', asyn
       )
     expect(clipped, `${width}px, indicadores`).toEqual([])
   }
+})
+
+test('destacar a telemetria demonstrativa no banner e abrir o monitoramento', async ({
+  page,
+}, testInfo) => {
+  await page.emulateMedia({ colorScheme: 'light' })
+  await page.goto('/')
+  const preview = page.getByRole('complementary', {
+    name: 'Cada conexão conta.',
+  })
+  const summary = summarizeMonitoring(
+    systemMonitors(demoSnapshot(), Date.parse(demoReference)),
+  )
+  await expect(preview).toBeVisible()
+  await expect(preview).toContainText('Demonstração')
+  await expect(preview).toContainText('Dados fictícios')
+  await expect(preview.locator('.hero-telemetry-total > strong')).toHaveText(
+    String(summary.total),
+  )
+  await expect(
+    preview.getByLabel('Resumo da simulação').getByRole('listitem'),
+  ).toHaveCount(4)
+  await expect(
+    preview
+      .getByLabel('Aplicativos em destaque na simulação')
+      .getByRole('listitem'),
+  ).toHaveText([
+    /Sólides.*Disponível/,
+    /Omie.*Degradado/,
+    /SharePoint.*Indisponível/,
+  ])
+  await expect(page.locator('.hero-primary')).toHaveAttribute(
+    'href',
+    '/monitoramento',
+  )
+  await page
+    .locator('.hero-section')
+    .screenshot({
+      path: `artifacts/${testInfo.project.name}-hero-telemetry-light.png`,
+    })
+  await page.getByRole('switch', { name: 'Modo escuro' }).click()
+  await expect(preview).toContainText('Dados fictícios')
+  await page
+    .locator('.hero-section')
+    .screenshot({
+      path: `artifacts/${testInfo.project.name}-hero-telemetry-dark.png`,
+    })
+  await preview.getByRole('link', { name: 'Ver telemetria completa' }).click()
+  await expect(page).toHaveURL(/\/monitoramento$/)
+  await expect(
+    page.getByRole('heading', { name: 'Monitoramento do backoffice' }),
+  ).toBeVisible()
+  await expect(page.locator('.system-monitor-card')).toHaveCount(summary.total)
 })
 
 test('manter apenas o botão de acesso futuro ao chatbot sem interface de conversa', async ({

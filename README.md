@@ -27,11 +27,11 @@ A pendência é [integrar o acesso ao chatbot externo](intelligent-cost-manageme
 
 O fluxo informado pela equipe é **Manual Trigger → Consulta RH (Sólides) → Consulta Financeiro (Omie) → Consolidação**, com requisições separadas para RH e Financeiro e um nó próprio de consolidação após a Omie. As respostas têm como referência a documentação oficial dessas plataformas, conforme informado pelo responsável. Essa confirmação atualiza o agrupamento de nós descrito no documento original. Consulte o [registro do chatbot](intelligent-cost-management/docs/CHATBOT.md#fluxo-informado-do-agente-externo).
 
-O [plano de monitoramento do backoffice](intelligent-cost-management/docs/MONITORAMENTO_BACKOFFICE.md) define arquitetura, cobertura e métricas. A primeira [interface de monitoramento](intelligent-cost-management/docs/MONITORAMENTO_FRONTEND.md) está em **`/monitoramento`**, com inventário sem telemetria por padrão, cenário fictício opcional, filtros e visão dos quatro nós do agente. O adaptador de leitura pode ser configurado por `VITE_MONITORING_API_URL`; coleta, armazenamento e alertas reais dependem dos serviços externos.
+O [plano de monitoramento do backoffice](intelligent-cost-management/docs/MONITORAMENTO_BACKOFFICE.md) define arquitetura, cobertura e métricas. A [interface de monitoramento](intelligent-cost-management/docs/MONITORAMENTO_FRONTEND.md) está em **`/monitoramento`**, com **demonstração em JSON dos 16 alvos mapeados**, indicadores administrativos, referências oficiais por aplicativo, download dos dados, filtros e visão dos quatro nós do agente. Sem API configurada, o cenário fictício abre automaticamente. O modo **Dados da coleta** mantém os alvos sem telemetria até receber observações válidas. O adaptador de leitura pode ser configurado por `VITE_MONITORING_API_URL`; coleta, armazenamento e alertas reais dependem dos serviços externos. Veja [fontes e limites dos dados demonstrativos](intelligent-cost-management/docs/DEMONSTRACAO_APPS.md).
 
 Para as duas APIs mock fornecidas, `npm.cmd run monitor:collect` gera uma verificação pontual sanitizada que o painel pode ler localmente. Veja os [comandos e limites da coleta dos mocks](intelligent-cost-management/docs/INTEGRACAO_APIS_MOCK.md). O comando não dispara o agente nem monitora as plataformas reais Sólides e Omie.
 
-Os **120 cartões originais são tarefas exclusivamente de front-end para o [Kanban externo no GitHub](https://github.com/users/Jukamargo/projects/2)**, com título e descrição, e não registros do dashboard financeiro nem tarefas de backend ou infraestrutura. O backlog original e sua publicação estão documentados em [docs/kanban](intelligent-cost-management/docs/kanban/README.md). O quadro também recebeu as solicitações de telemetria **GC-TEL-001 a GC-TEL-011**, nas issues **#121 a #131**, com impedimentos e dependências externas; a integração do chatbot continua na [issue #92](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/92). A base fictícia de colaboradores da aplicação é independente desse quadro de tarefas.
+Os **120 cartões originais são tarefas exclusivamente de front-end para o [Kanban externo no GitHub](https://github.com/users/Jukamargo/projects/2)**, com título e descrição, e não registros do dashboard financeiro nem tarefas de backend ou infraestrutura. O backlog original e sua publicação estão documentados em [docs/kanban](intelligent-cost-management/docs/kanban/README.md). O quadro também recebeu as solicitações de telemetria **GC-TEL-001 a GC-TEL-011**, nas issues **#121 a #131**, com impedimentos e dependências externas; a integração do chatbot continua na [issue #92](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/92). Em **24/11/2026**, foram adicionadas as entregas demonstrativas **GC-DEMO-001 a GC-DEMO-003**, nas issues **#133 a #135**, em **A validar**. O quadro tem **134 itens**; as integrações reais #121 e #123 voltaram para **A fazer** enquanto aguardam acessos. A implementação demonstrativa está local, com aceite e publicação pendentes. A base fictícia de colaboradores da aplicação é independente desse quadro de tarefas.
 
 ## Caso de uso: custos por colaborador
 
@@ -75,6 +75,7 @@ npm run build        # TypeScript e build de produção em dist/
 npm run preview      # Prévia do build
 npm test             # Dados e interface nas três resoluções
 npm run test:data    # Somente regras, integridade e consolidação
+npm run demo:generate # Regenerar o JSON demonstrativo dos aplicativos
 npm run format       # Formatação do código e documentação
 ```
 
@@ -126,7 +127,7 @@ Como alternativa ao cadastro manual, escolha **New → Blueprint**, selecione o 
 
 ### Monitoramento no ambiente publicado
 
-O site funciona sem variáveis de ambiente; o painel permanece **Sem telemetria**. Quando a API agregada estiver disponível, configure `VITE_MONITORING_API_URL` com sua URL HTTPS autorizada no projeto de cada plataforma e gere um novo deploy. O endereço deve apontar para o contrato agregado descrito no [guia de monitoramento](intelligent-cost-management/docs/MONITORAMENTO_FRONTEND.md), com autorização e CORS compatíveis com a origem publicada.
+O site funciona sem variáveis de ambiente; o painel abre o **Cenário demonstrativo**, identificado como fictício. Em **Dados da coleta**, os alvos permanecem **Sem telemetria** até existir coleta válida. Quando a API agregada estiver disponível, configure `VITE_MONITORING_API_URL` com sua URL HTTPS autorizada no projeto de cada plataforma e gere um novo deploy. O endereço deve apontar para o contrato agregado descrito no [guia de monitoramento](intelligent-cost-management/docs/MONITORAMENTO_FRONTEND.md), com autorização e CORS compatíveis com a origem publicada. O JSON demonstrativo usa `mode: demo` e não deve ser configurado como API real.
 
 Variáveis `VITE_` são incorporadas ao JavaScript durante o build e ficam públicas: não inclua tokens, senhas ou credenciais. Alterar essas variáveis exige novo build. Veja a [documentação de variáveis do Vite](https://vite.dev/guide/env-and-mode).
 
@@ -136,7 +137,7 @@ O arquivo `/mock-monitoring.json` é uma ponte local de desenvolvimento; uma pub
 
 - Abrir `/`, `/dashboard`, `/monitoramento` e `/custos/ICM-001` diretamente e atualizar a página.
 - Conferir carregamento de gráficos, fontes e estilos nos temas claro e escuro, no celular e no desktop.
-- Sem API configurada, confirmar **Sem telemetria**; com API configurada, conferir origem, horário e expiração da observação.
+- Sem API configurada, confirmar **Dados fictícios**, os 16 alvos e o download JSON; em **Dados da coleta**, confirmar **Sem telemetria**. Com API configurada, conferir origem, horário e expiração da observação.
 - Registrar as URLs finais na tabela de links deste README.
 
 ## Funcionalidades
@@ -252,7 +253,7 @@ docs/ESCOPO_FRONTEND.md       # Correspondência com o contexto fornecido
 
 [Protótipo Figma fornecido](https://www.figma.com/design/Q6pYa2PRIZKpCFZ2L3BZuX/Untitled?node-id=0-1). O arquivo não pôde ser acessado durante a implementação; não se afirma fidelidade ao protótipo. Não foram encontrados logos oficiais.
 
-O visual mantém uma apresentação sóbria, com Inter e temas claro e escuro. O banner institucional usa uma paleta clara no modo claro e azul-marinho no modo escuro, sem resumo operacional ou indicadores financeiros. Tipografia, margens e botões se adaptam à largura da tela. O destaque apresenta o objetivo de automação e o botão futuro do chatbot; dashboard, catálogo e composição de custos aparecem como um caso de uso da solução.
+O visual mantém uma apresentação sóbria, com Inter e temas claro e escuro. O banner institucional combina a apresentação da automação com uma prévia de telemetria em azul-marinho: total de alvos, distribuição dos estados e três aplicativos em destaque. Os números vêm do mesmo JSON demonstrativo do monitoramento, com identificação de dados fictícios, referência fixa e links para o painel completo. Tipografia, margens e botões se adaptam à largura da tela; no celular, a prévia aparece abaixo da apresentação. O botão futuro do chatbot permanece reservado; dashboard, catálogo e composição de custos aparecem como um caso de uso da solução.
 
 Os testes verificam o caso 101 de R$ 12.025,50, associação por CPF normalizado, isolamento por competência, integridade dos 120 cards, reconciliação dos gráficos, filtros, paginação e ausência de CPF completo na tela. Os fluxos são executados em **1440 × 1000**, **768 × 1024** e **390 × 844**. Capturas ficam em `artifacts/` e traces de falha em `test-results/`, pastas ignoradas pelo Git.
 

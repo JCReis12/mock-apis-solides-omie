@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ChatbotButton } from '../../components/ui/ChatbotButton'
 import {
@@ -10,6 +10,7 @@ import {
 } from '../../components/MarketingSections'
 import { CostCard } from '../../components/cards/CostCard'
 import { costService } from '../../services/costService'
+import { HeroTelemetry } from '../../components/monitoring/HeroTelemetry'
 
 const records = costService.list()
 const featured = [records[0], records[32], records[81]]
@@ -30,15 +31,14 @@ export default function Home() {
               <span>Rotinas conectadas.</span>
             </h1>
             <p>
-              Um projeto de automação de backoffice para conectar as ferramentas
-              da empresa e reduzir tarefas manuais em RH, Financeiro, documentos
-              e comunicação. O chatbot externo será o ponto de consulta da
-              equipe.
+              Conecte RH, Financeiro e documentos. Visualize os aplicativos e
+              acompanhe as rotinas da equipe em um só lugar.
             </p>
             <div className="hero-buttons">
-              <a className="button hero-primary" href="#sobre">
-                Conheça a solução <ArrowDown size={17} aria-hidden="true" />
-              </a>
+              <Link className="button hero-primary" to="/monitoramento">
+                Explorar monitoramento{' '}
+                <ArrowUpRight size={17} aria-hidden="true" />
+              </Link>
               <ChatbotButton />
             </div>
             <div className="hero-footnote">
@@ -46,6 +46,7 @@ export default function Home() {
               Integração do chatbot externo pendente.
             </div>
           </div>
+          <HeroTelemetry />
         </div>
         <div className="container hero-bottom">
           <span>Backoffice interno · Integração de ferramentas</span>
