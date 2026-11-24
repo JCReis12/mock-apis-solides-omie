@@ -4,7 +4,8 @@
 
 | Recurso             | Link                                                                          | Situação                        |
 | ------------------- | ----------------------------------------------------------------------------- | ------------------------------- |
-| Repositório         | [Código no GitHub](https://github.com/Jukamargo/frontend-pi-gestao-de-custos) | Código-fonte                    |
+| Repositório         | [Código no Bitbucket](https://bitbucket.org/2rp-net/pi-i1/src/migration%2Ffrontend-gestao-de-custos/) | Branch de importação do front-end |
+| Origem do histórico | [Código no GitHub](https://github.com/Jukamargo/frontend-pi-gestao-de-custos) | Histórico original preservado |
 | Kanban              | [GitHub Projects](https://github.com/users/Jukamargo/projects/2)              | Tarefas e impedimentos          |
 | Front-end na Vercel | [Acessar na Vercel](https://frontend-pi-gestao-de-custos.vercel.app/)         | Publicado                       |
 | Front-end no Render | [Acessar no Render](https://frontend-pi-gestao-de-custos.onrender.com)        | Publicado                       |
@@ -12,6 +13,8 @@
 | Omie — API mock     | [Contrato OpenAPI](https://inovanet-mock-omie.onrender.com/openapi.json)      | Serviço externo de demonstração |
 
 Use os links da Vercel e do Render para acessar o front-end. As APIs mock são serviços separados do site.
+
+A importação para o Bitbucket está na branch `migration/frontend-gestao-de-custos`, baseada em `develop`, com os históricos do front-end e do destino preservados. O fluxo de revisão segue [o guia da equipe](padrao-commits-e-versionamento.md). O Kanban continua no GitHub Projects; sua migração é separada do envio de código. Os ambientes Vercel e Render mantêm suas configurações existentes até a equipe alterar os vínculos de deploy. As notas anteriores sobre implementação local e commits pendentes registram a situação no momento da atualização do quadro.
 
 Atalhos: [Instalação](#instalação-e-execução) · [Deploy](#deploy-na-vercel-e-no-render) · [Rotas](#rotas) · [Estrutura](#estrutura).
 
@@ -89,7 +92,7 @@ O projeto gera um site estático em `intelligent-cost-management/dist/`. Use **N
 
 1. Execute `npm ci` e `npm run build` dentro de `intelligent-cost-management/`.
 2. Registre as configurações de deploy em um commit e envie a branch escolhida ao GitHub. As plataformas importam o código remoto, não as alterações locais.
-3. Selecione a branch que contém a aplicação completa. O trabalho atual está em `feat/intelligent-cost-management`; não selecione `main` antes de integrar as mudanças nela.
+3. Selecione a branch que contém a aplicação completa. No Bitbucket, a importação está em `migration/frontend-gestao-de-custos`; no GitHub de origem, está em `feat/intelligent-cost-management`. Selecione `main` somente após a integração da entrega pela equipe.
 
 ### Vercel
 
