@@ -1,0 +1,86 @@
+{
+  "repository": "Jukamargo/frontend-pi-gestao-de-custos",
+  "projectOwner": "Jukamargo",
+  "projectNumber": 2,
+  "reviewedOn": "2026-11-24",
+  "cards": [
+    {
+      "id": "GC-DEMO-001",
+      "title": "Disponibilizar JSON demonstrativo dos aplicativos mapeados à 2RPnet",
+      "status": "A validar",
+      "description": "Implementação local de connected-apps.json para os 16 alvos, com origem fictícia explícita, funcionalidades fundamentadas em fontes oficiais, referências por aplicativo, indicadores administrativos e histogramas das verificações técnicas simuladas. A geração é determinística e não consulta fornecedores.",
+      "files": [
+        "src/data/mocks/connected-apps.json",
+        "scripts/generate-connected-apps-demo.mjs",
+        "docs/DEMONSTRACAO_APPS.md"
+      ],
+      "acceptance": [
+        "Cobrir os 16 IDs do inventário sem alegar conexão real com os fornecedores.",
+        "Manter fonte, data da pesquisa, unidade, competência e limites de interpretação por aplicativo.",
+        "Reconciliar 120 colaboradores, quatro departamentos, 360 despesas e 240 lançamentos Onfly com a base financeira."
+      ]
+    },
+    {
+      "id": "GC-DEMO-002",
+      "title": "Apresentar indicadores por aplicativo e download do JSON no monitoramento",
+      "status": "A validar",
+      "description": "Implementação local em /monitoramento: cenário demonstrativo por padrão quando não há API configurada, indicadores administrativos por aplicativo, referências oficiais nos detalhes e botão Baixar dados JSON. O modo Dados da coleta continua independente e não aceita mode demo como resposta real.",
+      "files": [
+        "src/pages/Monitoring/index.tsx",
+        "src/components/monitoring/SystemMonitorCard.tsx",
+        "src/hooks/useMonitoring.ts",
+        "src/data/monitoring.ts"
+      ],
+      "acceptance": [
+        "Exibir Dados fictícios, os indicadores dos 16 alvos e suas referências oficiais.",
+        "Baixar o mesmo JSON que alimenta os cards e preservar os filtros e os temas.",
+        "Preservar Sem telemetria no modo de coleta sem fonte válida; não executar agente, enviar mensagens ou chamar APIs dos fornecedores."
+      ]
+    },
+    {
+      "id": "GC-DEMO-003",
+      "title": "Validar a demonstração dos aplicativos em desktop, tablet e celular",
+      "status": "A validar",
+      "description": "Validação automatizada local dos dados, cálculos de disponibilidade/erro/p95, separação entre demonstração e coleta, download JSON, fontes oficiais e interface nas três resoluções. O aceite da equipe e a publicação do código permanecem pendentes; os testes locais não homologam APIs externas.",
+      "files": [
+        "tests/monitoring.spec.ts",
+        "tests/monitoring-ui.spec.ts",
+        "tests/monitoring-api.spec.ts",
+        "docs/MONITORAMENTO_FRONTEND.md"
+      ],
+      "acceptance": [
+        "Executar os 19 testes de dados e os três testes responsivos de monitoramento.",
+        "Conferir modo claro/escuro, download, falha de autorização e ausência de rolagem horizontal entre 320 e 601 px.",
+        "Executar lint e build de produção; preservar o contrato de coleta live."
+      ]
+    }
+  ],
+  "existingUpdates": [
+    {
+      "number": 121,
+      "status": "A fazer",
+      "note": "APIs reais não obtidas, conforme a solicitação de 24/11/2026. A demonstração local pode ser apresentada sem essa dependência. A integração real permanece bloqueada por endereço, autorização e CORS da API agregada; sai de Em andamento para A fazer enquanto aguarda acesso."
+    },
+    {
+      "number": 123,
+      "status": "A fazer",
+      "note": "Os quatro nós têm somente uma execução fictícia no JSON demonstrativo. A telemetria real do agente continua dependente de acesso e exportação autorizada. Sai de Em andamento para A fazer enquanto aguarda essa dependência; a demonstração não publica nem executa o chatbot."
+    },
+    {
+      "number": 124,
+      "note": "Em 24/11/2026, o responsável informou que não conseguiu as APIs reais dos aplicativos. O impedimento de acesso permanece. Os mocks em JSON viabilizam a apresentação, mas não substituem a liberação de credenciais e permissões."
+    },
+    {
+      "number": 127,
+      "note": "Há uma proposta documentada de indicadores e fontes para os 16 alvos em docs/DEMONSTRACAO_APPS.md. A janela de 1 hora, as 60 verificações, os denominadores e o nearest-rank são regras do cenário fictício; ainda não representam parâmetros operacionais aprovados."
+    },
+    {
+      "number": 129,
+      "note": "A pesquisa oficial fundamentou os recursos de negócio do cenário JSON, sem consultar contas privadas ou confirmar integração real. Sólides, Omie e os demais fornecedores seguem pendentes de acesso autorizado. Não há evidência de leitura real em produção."
+    },
+    {
+      "number": 131,
+      "note": "A validação local da demonstração é acompanhada por GC-DEMO-003. A homologação integrada desta issue continua pendente das APIs reais e dos eventos autorizados do agente. Não encerrar esta issue com base nos testes do JSON fictício."
+    }
+  ]
+}

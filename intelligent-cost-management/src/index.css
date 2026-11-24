@@ -1,0 +1,18 @@
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import 'tailwindcss';
+@import './styles/theme.css';
+@import './styles/global.css';
+@import './styles/marketing.css';
+@import './styles/banner.css';
+@import './styles/application.css';
+@import './styles/ecosystem.css';
+@import './styles/monitoring.css';
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --color-brand: var(--accent);
+  --color-canvas: var(--canvas);
+}
