@@ -24,6 +24,142 @@ const now = Date.parse(demoReference)
 const sample = () =>
   demoSnapshot().observations.find((o) => o.systemId === 'solides')!
 
+test('cenários preservam o arquivo-base e mantêm métricas reconciliadas com suas amostras', async () => {
+  const { demoScenarios, demoScenarioId } =
+    await import('../src/data/demoScenarios')
+  const baseline = demoSnapshot()
+  expect(demoScenarioId('__proto__')).toBe('overview')
+  expect(demoScenarioId('inválido')).toBe('overview')
+  for (const scenario of Object.keys(
+    demoScenarios,
+  ) as (keyof typeof demoScenarios)[]) {
+    const snapshot = demoSnapshot(scenario)
+    expect(snapshot.observations.map((o) => o.systemId)).toEqual(
+      baseline.observations.map((o) => o.systemId),
+    )
+    for (const observation of snapshot.observations) {
+      const checks = observation.demo?.checks
+      if (!checks) continue
+      expect(checks.successful + checks.failed).toBe(checks.total)
+      const durations = checks.durationHistogram
+        .flatMap((bucket) =>
+          Array<number>(bucket.count).fill(bucket.durationMs),
+        )
+        .sort((a, b) => a - b)
+      expect(durations).toHaveLength(checks.total)
+      if (observation.metrics.latencyP95Ms !== null) {
+        expect(observation.metrics.latencyP95Ms).toBe(
+          durations[Math.ceil(0.95 * checks.total) - 1],
+        )
+        expect(observation.metrics.availabilityPercent).toBeCloseTo(
+          (100 * checks.successful) / checks.total,
+        )
+        expect(observation.metrics.errorRatePercent).toBeCloseTo(
+          (100 * checks.failed) / checks.total,
+        )
+      }
+    }
+    expect(demoSnapshot()).toEqual(baseline)
+  }
+})
+
+test('falha e autorização recusada interrompem somente as etapas dependentes da execução', () => {
+  expect(
+    demoSnapshot('normal').execution!.steps.every(
+      (step) => step.state === 'completed',
+    ),
+  ).toBe(true)
+  const failure = demoSnapshot('failure')
+  expect(failure.execution!.steps.map((step) => step.state)).toEqual([
+    'completed',
+    'completed',
+    'failed',
+    'skipped',
+  ])
+  expect(
+    failure.observations.find((o) => o.systemId === 'omie')!.metrics
+      .errorRatePercent,
+  ).toBe(20)
+  const denied = demoSnapshot('denied')
+  expect(denied.execution!.steps.map((step) => step.state)).toEqual([
+    'completed',
+    'failed',
+    'skipped',
+    'skipped',
+  ])
+  expect(
+    denied.observations.find((o) => o.systemId === 'solides'),
+  ).toMatchObject({
+    health: 'unknown',
+    reason: 'auth_error',
+    lastHttpStatus: 403,
+  })
+  expect(systemMonitors(denied, now).find((o) => o.id === 'omie')!.health).toBe(
+    'available',
+  )
+  expect(
+    denied
+      .execution!.steps.filter((step) => step.state === 'skipped')
+      .every((step) => step.durationMs === null),
+  ).toBe(true)
+})
+
+test('exportar a simulação vencida mantém datas e remove estados e métricas sem validade', async () => {
+  const { demoScenarioClock } = await import('../src/data/demoScenarios')
+  const { exportDemoScenario } =
+    await import('../src/services/demoScenarioService')
+  const snapshot = demoSnapshot('expired')
+  const expiredNow = demoScenarioClock('expired')
+  expect(expiredNow - now).toBe(120_000)
+  const exported = exportDemoScenario(snapshot, 'expired', expiredNow)
+  expect(exported.generatedAt).toBe(demoReference)
+  expect(exported.demoScenario.id).toBe('expired')
+  expect(
+    exported.observations.every(
+      (observation) =>
+        observation.health === 'unknown' &&
+        Object.values(observation.metrics).every((value) => value === null),
+    ),
+  ).toBe(true)
+  expect(
+    exported.execution!.steps.every(
+      (step) => step.state === 'unknown' && step.durationMs === null,
+    ),
+  ).toBe(true)
+  expect(
+    exported.observations.find((o) => o.systemId === 'solides')!.observedAt,
+  ).toBe(demoReference)
+  expect(
+    snapshot.observations.find((o) => o.systemId === 'solides')!.metrics
+      .availabilityPercent,
+  ).toBe(100)
+})
+
+test('pendências vêm dos indicadores administrativos e ausência de dados não vira zero', async () => {
+  const { demoPendingTasks } =
+    await import('../src/services/demoScenarioService')
+  const tasks = demoPendingTasks(demoSnapshot())
+  expect(tasks.map((task) => task.pending)).toEqual([12, 7, 3])
+  for (const task of tasks) {
+    expect(task.pending! + task.completed!).toBe(task.total)
+    expect(task.completionPercent).toBeCloseTo(
+      (100 * task.completed!) / task.total!,
+    )
+    expect(task.href).toContain('mode=demo')
+    expect(task.href).toContain(`system=${task.systemId}`)
+  }
+  const unavailable = demoPendingTasks(inventorySnapshot())
+  expect(
+    unavailable.every(
+      (task) =>
+        task.pending === null &&
+        task.completed === null &&
+        task.total === null &&
+        task.completionPercent === null,
+    ),
+  ).toBe(true)
+})
+
 test('JSON cobre todo o inventário, documenta a origem e reconcilia contadores com a base financeira', () => {
   expect(connectedApps.mode).toBe('demo')
   expect(connectedApps.provenance.synthetic).toBe(true)

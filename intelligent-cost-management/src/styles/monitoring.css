@@ -22,6 +22,80 @@
 .monitor-mode-bar {
   margin-bottom: 18px;
 }
+.monitor-demo-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.65fr);
+  gap: 16px 28px;
+  align-items: center;
+  padding: 22px;
+  margin-block: 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.monitor-demo-controls .eyebrow {
+  margin-bottom: 8px;
+  font-size: 10px;
+}
+.monitor-demo-controls h2 {
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+}
+.monitor-demo-controls label {
+  display: grid;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.monitor-demo-controls select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding-inline: 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  background: var(--surface-subtle);
+  color: var(--text-primary);
+  font-size: 13px;
+}
+.monitor-demo-controls p,
+.monitor-demo-controls small {
+  grid-column: 1 / -1;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.monitor-demo-controls small {
+  margin-top: -10px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.monitor-system-scope {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-accent);
+  font-size: 12px;
+}
+.monitor-system-scope button {
+  min-height: 44px;
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+}
+@media (max-width: 650px) {
+  .monitor-demo-controls {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 18px;
+  }
+}
 .monitor-mode-switch {
   gap: 4px;
   border: 1px solid var(--border);

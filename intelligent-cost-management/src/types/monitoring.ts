@@ -47,6 +47,15 @@ export interface MonitoringMetrics {
   errorRatePercent: number | null
 }
 export interface DemoContext {
+  checks?: {
+    total: number
+    successful: number
+    failed: number
+    durationHistogram: { durationMs: number; count: number }[]
+    percentileMethod: string
+    periodStart: string
+    periodEnd: string
+  } | null
   collectionMethod: string
   note: string
   officialReferences: {
