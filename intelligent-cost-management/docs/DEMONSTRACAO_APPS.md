@@ -2,7 +2,9 @@
 
 O arquivo [connected-apps.json](../src/data/mocks/connected-apps.json) contém o cenário demonstrativo dos **16 alvos mapeados** no contexto 2RPnet / Inovanet. A existência de um alvo no inventário não comprova conexão ou contratação em produção.
 
-Abra `/monitoramento`: sem API agregada configurada, o cenário aparece automaticamente com o aviso **Dados fictícios**. O botão **Baixar dados JSON** exporta o mesmo arquivo usado pelos cards. Em cada card, **Origem e alvo observado** apresenta as referências oficiais e os limites do exemplo.
+Abra `/monitoramento`: sem API agregada configurada, o cenário aparece automaticamente com o aviso **Dados fictícios**. O seletor **Cenário da demonstração** alterna a visão geral, a operação normal, a falha na integração, o acesso recusado e a coleta vencida. O botão **Baixar dados JSON** exporta os estados e as métricas apresentados no cenário selecionado. Em cada card, **Origem e alvo observado** apresenta as referências oficiais e os limites do exemplo.
+
+Na home, **O que precisa de atenção?** resume os contadores administrativos do arquivo-base: 12 backups pendentes, 7 documentos aguardando assinatura e 3 despesas a conciliar. Os atalhos abrem o monitoramento em modo demonstrativo com o aplicativo selecionado, inclusive quando existe uma API real configurada. Os números continuam fictícios e não representam alertas reais.
 
 ## Origem e interpretação
 
@@ -32,12 +34,13 @@ O acesso real depende de credenciais, contratos e, quando aplicável, do plano c
 ## Estrutura do JSON
 
 - `mode: "demo"` e `provenance.synthetic: true` identificam a origem fictícia.
-- `generatedAt` é a referência fixa `2026-11-24T15:00:00Z` (12h em Brasília). O relógio do cenário fica nessa referência para permitir demonstrações futuras sem renovar artificialmente a observação.
+- `generatedAt` é a referência fixa `2026-11-24T15:00:00Z` (12h em Brasília). O cenário de coleta vencida usa 12h02 como relógio de avaliação, preservando os horários originais das observações. Os demais cenários usam 12h.
 - `observations[]` guarda um registro por `systemId`, incluindo saúde e estado da integração simulados, fonte, janela, validade e métricas técnicas.
 - `demo.officialReferences[]` registra URL, título, data da pesquisa e exatamente o que a fonte fundamenta.
 - `demo.businessMetrics[]` guarda identificador, rótulo, valor, unidade, competência `2026-10` e `basis: "project_demo"`.
 - `demo.checks` contém 60 verificações fictícias por adaptador, totais de sucesso/falha, histograma de duração e período `14:00–15:00 UTC`. Nas rotinas sem coleta técnica, é `null`.
-- `execution` ilustra falha na consulta financeira e Consolidação não executada; não representa execução real do chatbot.
+- `execution` acompanha o cenário: na visão geral e na falha financeira, a Consolidação não é executada; na operação normal, as quatro etapas concluem; na recusa ao RH, Financeiro e Consolidação não são executados. A coleta vencida deixa todas as etapas sem informação. Não representa execução real do chatbot.
+- O JSON exportado inclui `demoScenario`, com identificador, rótulo e `evaluatedAt`. A exportação aplica as mesmas regras de autorização e validade da interface; os histogramas preservam as amostras históricas do cenário, mesmo quando as métricas atuais ficam `null`.
 
 Disponibilidade = `100 × sucessos / total`. Taxa de erro = `100 × falhas / total`. P95 usa nearest-rank: durações ordenadas, posição `ceil(0.95 × total)`, incluindo falhas. A latência descreve o adaptador fictício, não o SLA nem a velocidade real do fornecedor. Erro de autorização e manutenção deixam taxas e p95 sem valor.
 
@@ -55,4 +58,6 @@ npm.cmd run build
 npx.cmd playwright test tests/monitoring-ui.spec.ts --project=desktop --project=tablet --project=mobile
 ```
 
-Edite os cenários e referências em `scripts/generate-connected-apps-demo.mjs` e regenere o JSON. A geração é determinística e não faz chamadas de rede. O navegador importa o arquivo local; o download do build aponta para um ativo JSON versionado pelo Vite. A API agregada continua aceitando exclusivamente `mode: "live"`; não aponte `VITE_MONITORING_API_URL` para o JSON demonstrativo. O coletor pontual `monitor:collect` e seu arquivo `public/mock-monitoring.json` permanecem independentes.
+Edite a base e as referências em `scripts/generate-connected-apps-demo.mjs` e regenere o JSON. As transformações interativas ficam em `src/data/demoScenarios.ts` e usam cópias independentes da base, com métricas reconciliadas com os histogramas de cada cenário. A geração é determinística e não faz chamadas de rede. O navegador importa o arquivo local e monta o download do cenário selecionado em memória. A API agregada continua aceitando exclusivamente `mode: "live"`; não aponte `VITE_MONITORING_API_URL` para o JSON demonstrativo. O coletor pontual `monitor:collect` e seu arquivo `public/mock-monitoring.json` permanecem independentes.
+
+Os parâmetros de URL `mode`, `scenario` e `system` permitem compartilhar e recarregar a seleção. Por exemplo: `/monitoramento?mode=demo&scenario=failure&system=omie`. Valores de cenário desconhecidos retornam à visão geral; IDs de sistemas desconhecidos mostram o inventário completo. A ação **Ver todos os aplicativos** remove o recorte do sistema e limpa os filtros, preservando o cenário selecionado.

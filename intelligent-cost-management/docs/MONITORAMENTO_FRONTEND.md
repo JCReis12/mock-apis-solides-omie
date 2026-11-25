@@ -24,11 +24,13 @@ Falhas HTTP, de rede, timeout ou de contrato são apresentadas com opção de te
 
 ### Cenário demonstrativo
 
-Abre por padrão quando `VITE_MONITORING_API_URL` não está configurada; também pode ser selecionado pelo botão **Cenário demonstrativo**. O arquivo versionado `src/data/mocks/connected-apps.json` alimenta os 16 cards e pode ser baixado pelo botão **Baixar dados JSON**. Usa referência fixa em **24 de novembro de 2026, às 12h de Brasília** e indicadores administrativos da competência **10/2026**. Não consulta sistemas externos e não avança como se fosse uma coleta em tempo real.
+Abre por padrão quando `VITE_MONITORING_API_URL` não está configurada; também pode ser selecionado pelo botão **Cenário demonstrativo** ou pelo parâmetro `mode=demo`. O arquivo versionado `src/data/mocks/connected-apps.json` é a base dos 16 cards. O seletor **Cenário da demonstração** oferece visão geral, operação normal, falha na integração, acesso recusado e coleta vencida. A escolha fica na URL e é preservada na recarga. Usa referência fixa em **24 de novembro de 2026, às 12h de Brasília** e indicadores administrativos da competência **10/2026**. A coleta vencida avalia as observações às **12h02**, sem alterar sua origem ou validade. Não consulta sistemas externos nem avança como uma coleta em tempo real.
 
 Os exemplos incluem alvo disponível com integração pausada, erro de autorização sem classificar o fornecedor como indisponível, degradação, falha e manutenção. As taxas e o p95 usam 60 verificações fictícias por adaptador em uma janela de uma hora, com histograma e denominadores no JSON. Rotinas manuais ou propostas mantêm métricas técnicas `null`, mas apresentam contadores administrativos fictícios. Consulte [fontes, estrutura e limites da demonstração](DEMONSTRACAO_APPS.md).
 
-A execução fictícia do agente termina com falha na consulta financeira; a Consolidação fica **Não executada**, sem duração inventada. Não há conversa, botão para disparar o agente, controle de fornecedores ou envio de alertas reais.
+A execução fictícia acompanha o cenário selecionado: sucesso nas quatro etapas, falha financeira com Consolidação não executada, recusa ao RH com as duas etapas seguintes não executadas ou dados vencidos sem informação. O botão **Baixar dados JSON** exporta o cenário selecionado, incluindo o horário de avaliação e os mesmos estados normalizados apresentados na tela. Não há conversa, botão para disparar o agente, controle de fornecedores ou envio de alertas reais.
+
+Os atalhos de pendências da home usam `mode=demo&system=ID` para abrir apenas o aplicativo correspondente, sem depender da configuração de API real. **Ver todos os aplicativos** restaura o inventário. Os parâmetros de cenário inválidos usam a visão geral e os IDs de sistemas desconhecidos não restringem o inventário.
 
 ## Configuração da API agregada
 

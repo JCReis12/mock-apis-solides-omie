@@ -48,7 +48,7 @@ Esse complemento é uma apresentação de escopo, sem executar integrações ou 
 
 ## Limites e decisões
 
-Após a [definição da arquitetura de monitoramento](MONITORAMENTO_BACKOFFICE.md), foi autorizada a primeira implementação da [interface de consulta](MONITORAMENTO_FRONTEND.md), em `/monitoramento`. O módulo separa saúde dos alvos, configuração das integrações e resultado das automações. Sem API configurada, os estados ficam sem telemetria; um cenário fictício pode ser ativado explicitamente. O adaptador HTTP valida o contrato agregado, trata falhas e expiração. A coleta e os alertas reais dependem da infraestrutura externa.
+Após a [definição da arquitetura de monitoramento](MONITORAMENTO_BACKOFFICE.md), foi autorizada a implementação da [interface de consulta](MONITORAMENTO_FRONTEND.md), em `/monitoramento`. O módulo separa saúde dos alvos, configuração das integrações e resultado das automações. Sem API configurada, abre uma demonstração fictícia com seleção de cenários; o modo de coleta permanece sem telemetria até receber observações válidas. A home apresenta a prévia de saúde e as pendências administrativas do mesmo JSON, com identificação de simulação. O adaptador HTTP valida o contrato agregado, trata falhas e expiração. A coleta e os alertas reais dependem da infraestrutura externa.
 
 Os modelos locais são normalizados para a interface, e não uma declaração de compatibilidade integral com todos os campos das APIs externas. Nenhum endpoint externo é chamado nesta versão. O texto não apresenta o workflow documentado como se estivesse conectado ao navegador.
 
