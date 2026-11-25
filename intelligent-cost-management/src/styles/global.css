@@ -140,12 +140,14 @@ main {
 .button-primary:hover {
   background: var(--primary-hover);
 }
-.chatbot-button:disabled {
-  opacity: 1;
-  cursor: default;
+.chatbot-button {
   background: var(--surface-accent);
-  border-color: var(--border);
-  color: var(--text-secondary);
+  border-color: var(--border-strong);
+  color: var(--accent);
+}
+.chatbot-button:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
 }
 .button-secondary {
   background: var(--surface);

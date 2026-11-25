@@ -44,7 +44,7 @@ export default function Home() {
             </div>
             <div className="hero-footnote">
               <span />
-              Integração do chatbot externo pendente.
+              Google Cloud · acesso sujeito às permissões da equipe.
             </div>
           </div>
           <HeroTelemetry />

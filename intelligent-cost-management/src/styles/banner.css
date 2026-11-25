@@ -89,10 +89,14 @@
   background: var(--primary-hover);
   border-color: var(--primary-hover);
 }
-.hero-section .chatbot-button:disabled {
-  color: var(--banner-muted);
+.hero-section .chatbot-button {
+  color: var(--banner-text);
   background: var(--surface-accent);
   border-color: var(--banner-line);
+}
+.hero-section .chatbot-button:hover {
+  background: var(--surface-hover);
+  border-color: var(--banner-accent);
 }
 .hero-footnote {
   display: flex;
