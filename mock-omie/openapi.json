@@ -1,46 +1,61 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "title": "Inovanet - Omie Financeiro (Mock API)",
-    "description": "API de simulação do Omie (ERP Financeiro) para o projeto 'Inovanet - Centralização de Ferramentas de RH e Financeiro com Gemini Enterprise'. Expõe endpoint REST para consulta de despesas variáveis e reembolsos filtrados por CPF e período.",
-    "version": "1.0.0"
+    "title": "Inovanet - Sólides RH & Ecossistema People (Mock API)",
+    "description": "API de simulação da Sólides (RH) e conectores do ecossistema People (SulAmérica, Wellhub, Flash Benefícios, Vixting, Porto Seguro e Alura/Senai) para o projeto Inovanet com Gemini Enterprise.",
+    "version": "1.1.0"
   },
   "servers": [
     {
-      "url": "https://SEU-SERVICO-OMIE.onrender.com",
-      "description": "Servidor da API Mock Omie no Render"
+      "url": "http://localhost:8000",
+      "description": "Servidor da API Mock Sólides (Render / Local)"
     }
   ],
   "paths": {
-    "/omie/despesas": {
+    "/solides/colaboradores": {
       "get": {
         "tags": [
-          "Omie (Financeiro)"
+          "Sólides (RH)"
         ],
-        "summary": "Consultar despesas variáveis e reembolsos por CPF e período",
-        "description": "Simula via REST simplificado uma consulta ao módulo de Contas a Pagar / Despesas do Omie. Filtra os lançamentos pelo colaborador_cpf (obtido na Sólides) e pelo periodo de competência (YYYY-MM).",
-        "operationId": "consultar_despesas_omie",
+        "summary": "Listar ou buscar colaboradores por nome ou departamento",
+        "description": "Permite ao agente buscar colaboradores pelo nome ou listar todos os cadastros disponíveis para descobrir IDs e CPFs.",
+        "operationId": "listar_colaboradores_solides",
         "parameters": [
           {
-            "name": "colaborador_cpf",
+            "name": "nome",
             "in": "query",
-            "required": true,
-            "description": "CPF do colaborador com ou sem pontuação (ex: 123.456.789-00 ou 987.654.321-11)",
+            "required": false,
             "schema": {
-              "type": "string",
-              "title": "Colaborador Cpf"
-            }
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtro parcial por nome do colaborador (ex: 'Mariana', 'Beatriz')",
+              "title": "Nome"
+            },
+            "description": "Filtro parcial por nome do colaborador (ex: 'Mariana', 'Beatriz')"
           },
           {
-            "name": "periodo",
+            "name": "departamento",
             "in": "query",
-            "required": true,
-            "description": "Período de competência no formato YYYY-MM (ex: 2026-10)",
+            "required": false,
             "schema": {
-              "type": "string",
-              "pattern": "^\\d{4}-\\d{2}$",
-              "title": "Periodo"
-            }
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtro por departamento (ex: 'Tecnologia', 'Comercial')",
+              "title": "Departamento"
+            },
+            "description": "Filtro por departamento (ex: 'Tecnologia', 'Comercial')"
           }
         ],
         "responses": {
@@ -49,7 +64,133 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DespesasOmieResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ColaboradorResumo"
+                  },
+                  "title": "Response Listar Colaboradores Solides"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solides/colaboradores/{colaborador_id}": {
+      "get": {
+        "tags": [
+          "Sólides (RH)"
+        ],
+        "summary": "Consultar dados cadastrais, salário base e benefícios fixos do colaborador",
+        "description": "Retorna dados de RH, salário base, benefícios fixos e CPF da Sólides a partir do ID (ex: 101, 102, 103, 104).",
+        "operationId": "consultar_colaborador_solides",
+        "parameters": [
+          {
+            "name": "colaborador_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "ID interno do colaborador na Sólides (ex: 101, 102, 103, 104)",
+              "title": "Colaborador Id"
+            },
+            "description": "ID interno do colaborador na Sólides (ex: 101, 102, 103, 104)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ColaboradorSolidesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solides/colaboradores/{colaborador_id}/beneficios-detalhados": {
+      "get": {
+        "tags": [
+          "Sólides (RH)"
+        ],
+        "summary": "Consultar detalhamento das integrações People (SulAmérica, Wellhub, Vixting, Porto Seguro, Alura)",
+        "description": "Retorna status e planos detalhados dos benefícios e fornecedores de RH vinculados ao colaborador.",
+        "operationId": "consultar_beneficios_detalhados_people",
+        "parameters": [
+          {
+            "name": "colaborador_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "ID interno do colaborador na Sólides (ex: 101, 102, 103, 104)",
+              "title": "Colaborador Id"
+            },
+            "description": "ID interno do colaborador na Sólides (ex: 101, 102, 103, 104)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegracoesPeopleResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solides/integracoes/status": {
+      "get": {
+        "tags": [
+          "Observabilidade & Conectores"
+        ],
+        "summary": "Consultar telemetria e integridade dos conectores do ecossistema (Sólides, Flash, Onfly, etc.)",
+        "description": "Retorna disponibilidade, latência p95, taxa de erro e saúde de todos os nós e fornecedores mapeados no projeto.",
+        "operationId": "consultar_status_integracoes_people",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthOverviewResponse"
                 }
               }
             }
@@ -60,108 +201,294 @@
   },
   "components": {
     "schemas": {
-      "ItemDespesaOmie": {
-        "title": "ItemDespesaOmie",
-        "required": [
-          "id_lancamento",
-          "data_lancamento",
-          "categoria",
-          "origem_integracao",
-          "descricao",
-          "valor",
-          "status_pagamento"
-        ],
-        "type": "object",
+      "BeneficiosFixos": {
         "properties": {
-          "id_lancamento": {
-            "title": "Id Lancamento",
-            "type": "string",
-            "description": "Código identificador do lançamento no Omie"
-          },
-          "data_lancamento": {
-            "title": "Data Lancamento",
-            "type": "string",
-            "description": "Data da despesa (YYYY-MM-DD)"
-          },
-          "categoria": {
-            "title": "Categoria",
-            "type": "string",
-            "description": "Categoria financeira (ex: Viagem, Reembolso, Hospedagem)"
-          },
-          "origem_integracao": {
-            "title": "Origem Integracao",
-            "type": "string",
-            "description": "Plataforma de origem do gasto (ex: Onfly, Flash, Direto Omie)"
-          },
-          "descricao": {
-            "title": "Descricao",
-            "type": "string",
-            "description": "Histórico/descrição da despesa"
-          },
-          "valor": {
-            "title": "Valor",
+          "vale_refeicao_alimentacao": {
             "type": "number",
-            "description": "Valor da despesa em R$"
+            "title": "Vale Refeicao Alimentacao",
+            "description": "Valor mensal de VR/VA em R$"
           },
-          "status_pagamento": {
-            "title": "Status Pagamento",
-            "type": "string",
-            "description": "Status do pagamento no contas a pagar do Omie"
+          "plano_saude_sulamerica": {
+            "type": "number",
+            "title": "Plano Saude Sulamerica",
+            "description": "Custo mensal do plano de saúde SulAmérica em R$"
+          },
+          "wellhub_gympass": {
+            "type": "number",
+            "title": "Wellhub Gympass",
+            "description": "Custo mensal do benefício Wellhub em R$"
+          },
+          "auxilio_home_office": {
+            "type": "number",
+            "title": "Auxilio Home Office",
+            "description": "Auxílio mensal de home office em R$"
           }
-        }
-      },
-      "DespesasOmieResponse": {
-        "title": "DespesasOmieResponse",
-        "required": [
-          "colaborador_cpf",
-          "periodo",
-          "quantidade_lancamentos",
-          "total_despesas_variaveis",
-          "despesas"
-        ],
+        },
         "type": "object",
+        "required": [
+          "vale_refeicao_alimentacao",
+          "plano_saude_sulamerica",
+          "wellhub_gympass",
+          "auxilio_home_office"
+        ],
+        "title": "BeneficiosFixos"
+      },
+      "ColaboradorResumo": {
         "properties": {
-          "fonte": {
-            "title": "Fonte",
+          "colaborador_id": {
+            "type": "integer",
+            "title": "Colaborador Id",
+            "description": "ID único do colaborador na Sólides"
+          },
+          "nome": {
             "type": "string",
-            "description": "Sistema de origem dos lançamentos",
-            "default": "Omie ERP Financeiro (Mock REST)"
+            "title": "Nome",
+            "description": "Nome completo"
+          },
+          "cargo": {
+            "type": "string",
+            "title": "Cargo",
+            "description": "Cargo atual"
+          },
+          "departamento": {
+            "type": "string",
+            "title": "Departamento",
+            "description": "Departamento/Área"
           },
           "colaborador_cpf": {
+            "type": "string",
             "title": "Colaborador Cpf",
+            "description": "CPF do colaborador"
+          },
+          "status": {
             "type": "string",
-            "description": "CPF consultado"
-          },
-          "periodo": {
-            "title": "Periodo",
-            "type": "string",
-            "description": "Período de competência consultado (YYYY-MM)"
-          },
-          "quantidade_lancamentos": {
-            "title": "Quantidade Lancamentos",
-            "type": "integer",
-            "description": "Total de registros encontrados para o filtro"
-          },
-          "total_despesas_variaveis": {
-            "title": "Total Despesas Variaveis",
-            "type": "number",
-            "description": "Soma total das despesas variáveis no período em R$"
-          },
-          "despesas": {
-            "title": "Despesas",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ItemDespesaOmie"
-            },
-            "description": "Lista detalhada de despesas/reembolsos"
-          },
-          "observacao": {
-            "title": "Observacao",
-            "type": "string",
-            "description": "Mensagem informativa sobre o resultado da consulta ou ausência de dados no período",
-            "default": ""
+            "title": "Status",
+            "description": "Status do contrato"
           }
-        }
+        },
+        "type": "object",
+        "required": [
+          "colaborador_id",
+          "nome",
+          "cargo",
+          "departamento",
+          "colaborador_cpf",
+          "status"
+        ],
+        "title": "ColaboradorResumo"
+      },
+      "ColaboradorSolidesResponse": {
+        "properties": {
+          "fonte": {
+            "type": "string",
+            "title": "Fonte",
+            "description": "Sistema de origem do registro",
+            "default": "Sólides RH (Mock)"
+          },
+          "colaborador_id": {
+            "type": "integer",
+            "title": "Colaborador Id",
+            "description": "ID único do colaborador na Sólides"
+          },
+          "nome": {
+            "type": "string",
+            "title": "Nome",
+            "description": "Nome completo do colaborador"
+          },
+          "colaborador_cpf": {
+            "type": "string",
+            "title": "Colaborador Cpf",
+            "description": "CPF do colaborador (chave de cruzamento com o Omie)"
+          },
+          "cargo": {
+            "type": "string",
+            "title": "Cargo",
+            "description": "Cargo atual"
+          },
+          "departamento": {
+            "type": "string",
+            "title": "Departamento",
+            "description": "Área/Departamento de alocação"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Status contratual do colaborador"
+          },
+          "data_admissao": {
+            "type": "string",
+            "title": "Data Admissao",
+            "description": "Data de admissão (YYYY-MM-DD)"
+          },
+          "salario_base": {
+            "type": "number",
+            "title": "Salario Base",
+            "description": "Salário bruto base mensal em R$"
+          },
+          "beneficios_fixos": {
+            "$ref": "#/components/schemas/BeneficiosFixos"
+          },
+          "total_beneficios_fixos": {
+            "type": "number",
+            "title": "Total Beneficios Fixos",
+            "description": "Soma dos benefícios fixos mensais em R$"
+          }
+        },
+        "type": "object",
+        "required": [
+          "colaborador_id",
+          "nome",
+          "colaborador_cpf",
+          "cargo",
+          "departamento",
+          "status",
+          "data_admissao",
+          "salario_base",
+          "beneficios_fixos",
+          "total_beneficios_fixos"
+        ],
+        "title": "ColaboradorSolidesResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthOverviewResponse": {
+        "properties": {
+          "businessPeriod": {
+            "type": "string",
+            "title": "Businessperiod",
+            "description": "Período de referência (YYYY-MM)"
+          },
+          "totalSistemas": {
+            "type": "integer",
+            "title": "Totalsistemas",
+            "description": "Total de sistemas monitorados"
+          },
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/HealthStatusItem"
+            },
+            "type": "array",
+            "title": "Observations",
+            "description": "Status e indicadores de cada conector"
+          }
+        },
+        "type": "object",
+        "required": [
+          "businessPeriod",
+          "totalSistemas",
+          "observations"
+        ],
+        "title": "HealthOverviewResponse"
+      },
+      "HealthStatusItem": {
+        "properties": {
+          "systemId": {
+            "type": "string",
+            "title": "Systemid",
+            "description": "Identificador do sistema integrado"
+          },
+          "health": {
+            "type": "string",
+            "title": "Health",
+            "description": "Saúde operacional (available, degraded, maintenance, unavailable, unknown)"
+          },
+          "integrationState": {
+            "type": "string",
+            "title": "Integrationstate",
+            "description": "Estado da integração (enabled, paused, not_configured)"
+          },
+          "metrics": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metrics",
+            "description": "Métricas de disponibilidade e latência"
+          }
+        },
+        "type": "object",
+        "required": [
+          "systemId",
+          "health",
+          "integrationState"
+        ],
+        "title": "HealthStatusItem"
+      },
+      "IntegracoesPeopleResponse": {
+        "properties": {
+          "colaborador_id": {
+            "type": "integer",
+            "title": "Colaborador Id",
+            "description": "ID do colaborador"
+          },
+          "nome": {
+            "type": "string",
+            "title": "Nome",
+            "description": "Nome do colaborador"
+          },
+          "integracoes_people": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Integracoes People",
+            "description": "Detalhamento em SulAmérica, Wellhub, Porto Seguro, Flash, Vixting e Alura"
+          }
+        },
+        "type": "object",
+        "required": [
+          "colaborador_id",
+          "nome",
+          "integracoes_people"
+        ],
+        "title": "IntegracoesPeopleResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
       }
     }
   }

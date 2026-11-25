@@ -1,64 +1,66 @@
-# Prompts de Teste e Demonstração — Agente de Gestão de Custos
+# Prompts de Teste e Demonstração — Agente de Gestão de Custos & Pessoas (Inovanet)
+
+Este documento reúne os prompts ideais para homologar o agente no **Gemini Enterprise (Vertex AI Agent Builder)**, explorando os novos nós de decisão, busca por nome, detalhamento de benefícios e observabilidade de integrações.
 
 ---
 
-## 1. Custo Consolidado Completo por ID (Cruzamento Sólides + Omie + Onfly/Flash)
-**Situação de uso:** Quando o gestor deseja consultar o custo total mensal de um colaborador informando apenas o ID da Sólides (`101`) e o período (`2026-10`), fazendo o agente buscar o salário/benefícios na Sólides, descobrir o CPF e somar todas as despesas variáveis (viagens, hospedagens e reembolsos) lançadas no Omie.
+## 1. Descoberta e Fechamento Buscando Apenas pelo Primeiro Nome
+**O que testa:** O agente não sabe o ID nem o CPF. Ele primeiro invoca `listar_colaboradores_solides` com o filtro de nome, descobre que é a Mariana Costa (ID 103, CPF `456.789.012-34`) e em seguida consulta o Omie para apurar os gastos do mês.
 
 ```text
-Qual foi o custo total consolidado da colaboradora de ID 101 no período 2026-10? Apresente um demonstrativo separando os custos fixos de RH (Sólides), o detalhamento das despesas variáveis financeiras (Omie, indicando se vieram da Onfly ou Flash) e o valor total mensal.
+Qual foi o custo total da Mariana no mês de outubro de 2026 (2026-10)? Busque os dados dela de folha e benefícios na Sólides e depois verifique se ela teve despesas ou reembolsos registrados no Omie.
 ```
 
 ---
 
-## 2. Fechamento Mensal Buscando Apenas pelo Nome do Colaborador
-**Situação de uso:** Quando o gestor não sabe o ID nem o CPF do colaborador e solicita o fechamento de custos de um mês específico (`2026-09`) informando apenas o nome completo (`Ana Beatriz Souza`).
+## 2. Consolidação Financeira Completa com Reembolsos Comerciais
+**O que testa:** Colaborador de vendas (Rodrigo Silva, ID 104) que viajou para atender clientes via Onfly (passagem e hospedagem) e lançou jantares com clientes via Flash.
 
 ```text
-Preciso do fechamento de custos da colaboradora Ana Beatriz Souza referente ao mês de setembro de 2026 (2026-09). Quanto ela custou no total para a empresa nesse mês?
+Apresente o demonstrativo de custos do colaborador Rodrigo Silva Santos (ID 104) referente a 2026-10. Separe o que é salário e benefícios fixos na Sólides do que foram despesas de viagem corporativa (Onfly) e reembolsos de alimentação (Flash) no Omie.
 ```
 
 ---
 
-## 3. Colaborador sem Despesas Variáveis ou Reembolsos no Período
-**Situação de uso:** Quando o colaborador possui apenas custos fixos de folha e benefícios na Sólides e não teve nenhum gasto variável ou reembolso registrado no Omie naquele mês (`ID 102` em `2026-10`), validando que o agente retorna `R$ 0,00` de custo variável sem inventar lançamentos.
+## 3. Investigação Detalhada de Benefícios People (SulAmérica, Wellhub e Capacitação)
+**O que testa:** O agente invoca o novo nó `consultar_beneficios_detalhados_people` para apurar a cobertura de plano de saúde, seguro de vida Porto Seguro, uso de academia Wellhub e cursos Alura/Senai da colaboradora.
 
 ```text
-Consulte o custo mensal consolidado do colaborador Carlos Eduardo Lima (ID 102) na competência 2026-10. Ele teve algum reembolso ou despesa variável lançada no Omie nesse período?
+Quais são os benefícios corporativos ativos da colaboradora Ana Beatriz Souza (ID 101)? Ela possui dependentes no plano de saúde SulAmérica e está utilizando a licença da Alura ou o Wellhub?
 ```
 
 ---
 
-## 4. Análise Comparativa de Variação de Custos entre Dois Meses
-**Situação de uso:** Quando a liderança precisa entender por que o custo de um mesmo colaborador aumentou de um mês para o outro (`2026-09` vs. `2026-10`) e quais lançamentos específicos no Omie causaram essa diferença.
+## 4. Fechamento Consolidado por Canal (Onfly vs Flash vs Direto Omie)
+**O que testa:** O agente utiliza o novo endpoint `consultar_fechamento_consolidado_omie` para totalizar e categorizar os gastos variáveis sem precisar somar item a item manualmente.
 
 ```text
-Compare o custo total da colaboradora Ana Beatriz Souza (ID 101) entre os períodos 2026-09 e 2026-10. Qual foi a diferença em reais (R$) entre os dois meses e quais lançamentos no Omie explicam essa variação?
+Gere um resumo financeiro das despesas variáveis de outubro de 2026 da colaboradora com CPF 456.789.012-34 (Mariana). Quanto do valor foi investido em infraestrutura direta e quanto foi reembolso via Flash?
 ```
 
 ---
 
-## 5. Consolidação Executiva de Custos da Equipe (Múltiplos Colaboradores)
-**Situação de uso:** Quando a diretoria solicita um panorama comparativo entre colaboradores de diferentes áreas (`ID 101` de Tecnologia e Dados e `ID 102` do Financeiro) e o custo total somado da equipe na competência (`2026-10`).
+## 5. Auditoria de Saúde das Integrações e Conectores do Ecossistema
+**O que testa:** O agente utiliza o endpoint de telemetria `consultar_status_integracoes_people` para auditar quais sistemas do ecossistema estão disponíveis, quais estão degradados (como o Omie e o SharePoint) e quais estão em manutenção ou aguardando configuração.
 
 ```text
-Gere um resumo executivo para a diretoria comparando os custos totais dos colaboradores 101 (Ana Beatriz Souza) e 102 (Carlos Eduardo Lima) no período 2026-10, informando também a soma geral de custo dos dois colaboradores juntos para a Inovanet.
+Como está a saúde e a disponibilidade dos conectores e sistemas integrados do ecossistema Inovanet? Houve alguma instabilidade ou erro recente reportado no Omie, na Flash ou no SharePoint?
 ```
 
 ---
 
-## 6. Auditoria de Gastos Variáveis por Plataforma Integrada (Onfly vs. Flash)
-**Situação de uso:** Quando o setor financeiro deseja auditar as despesas variáveis de um colaborador no Omie separando quanto veio de viagens/hospedagem (`Onfly - Refund`) e quanto veio de reembolsos gerais (`Flash - Gestão de Despesas`).
+## 6. Comparativo entre Departamentos (Tecnologia vs Comercial)
+**O que testa:** Múltiplas etapas lógicas: o agente lista os colaboradores das áreas de Tecnologia e Comercial, extrai salários, benefícios e gastos de viagem, gerando uma visão executiva consolidada.
 
 ```text
-Considerando as despesas variáveis da colaboradora ID 101 em outubro de 2026 (2026-10) no Omie, quanto foi gasto especificamente via "Onfly - Refund" (viagens e hospedagem) e quanto foi gasto via "Flash - Gestão de Despesas"?
+Faça uma comparação do custo da Mariana Ribeiro Costa (Tecnologia/Infra) com o Rodrigo Silva Santos (Comercial) em 2026-10. Quem teve o maior gasto com despesas variáveis e qual foi o motivo principal dessa diferença?
 ```
 
 ---
 
-## 7. Auditoria Comparativa de Benefícios Fixos de RH (Sólides)
-**Situação de uso:** Quando o RH ou gestor deseja comparar apenas a estrutura de remuneração fixa e benefícios (VR/VA, Plano de Saúde SulAmérica, Wellhub e Auxílio Home Office) entre colaboradores na Sólides.
+## 7. Colaborador sem Despesas Variáveis (Validação de R$ 0,00)
+**O que testa:** Garantir que o agente não inventa dados quando um colaborador não possui despesas no Omie.
 
 ```text
-Detalhe e compare a composição dos benefícios fixos mensais na Sólides dos colaboradores 101 (Ana Beatriz Souza) e 102 (Carlos Eduardo Lima). Qual é a diferença de valor em benefícios entre eles e o que explica essa diferença?
+Consulte o custo mensal do Carlos Eduardo Lima (ID 102) em 2026-10. Ele gerou alguma despesa variável ou reembolso no Omie nesse mês?
 ```
