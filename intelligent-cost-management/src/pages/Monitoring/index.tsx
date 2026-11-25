@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import {
   Activity,
   AlertTriangle,
@@ -20,22 +21,50 @@ import {
   systemMonitors,
 } from '../../services/monitoringService'
 import { healthLabels, integrationLabels } from '../../types/monitoring'
-import demoJsonUrl from '../../data/mocks/connected-apps.json?url'
+import { demoScenarios, demoScenarioId } from '../../data/demoScenarios'
+import { DemoScenarioDownload } from '../../components/monitoring/DemoScenarioDownload'
 
 export default function Monitoring() {
-  const { mode, setMode, configured, snapshot, loading, error, refresh, now } =
-    useMonitoring()
+  const {
+    mode,
+    setMode,
+    scenario,
+    setScenario,
+    configured,
+    snapshot,
+    loading,
+    error,
+    refresh,
+    now,
+  } = useMonitoring()
+  const [params, setParams] = useSearchParams()
   const [search, setSearch] = useState('')
   const [health, setHealth] = useState('')
   const [integration, setIntegration] = useState('')
   const allSystems = systemMonitors(snapshot, now)
-  const systems = filterMonitors(allSystems, search, health, integration)
+  const selectedSystem = allSystems.find(
+    (system) => system.id === params.get('system'),
+  )
+  const systems = filterMonitors(
+    selectedSystem ? [selectedSystem] : allSystems,
+    search,
+    health,
+    integration,
+  )
   const summary = summarizeMonitoring(systems)
   const demo = mode === 'demo'
   const reset = () => {
     setSearch('')
     setHealth('')
     setIntegration('')
+    setParams(
+      (previous) => {
+        const next = new URLSearchParams(previous)
+        next.delete('system')
+        return next
+      },
+      { replace: true },
+    )
   }
   return (
     <>
@@ -79,13 +108,11 @@ export default function Monitoring() {
           </button>
         </div>
         {demo && (
-          <a
-            className="button button-secondary"
-            href={demoJsonUrl}
-            download="2rpnet-apps-demonstracao.json"
-          >
-            Baixar dados JSON
-          </a>
+          <DemoScenarioDownload
+            snapshot={snapshot}
+            scenario={scenario}
+            now={now}
+          />
         )}
         {!demo && configured && (
           <button
@@ -99,16 +126,51 @@ export default function Monitoring() {
           </button>
         )}
       </div>
+      {demo && (
+        <section
+          className="monitor-demo-controls"
+          aria-labelledby="monitor-demo-heading"
+        >
+          <div>
+            <span className="eyebrow">SIMULAÇÃO CONTROLADA</span>
+            <h2 id="monitor-demo-heading">Explore situações da operação</h2>
+          </div>
+          <label>
+            <span>Cenário da demonstração</span>
+            <select
+              value={scenario}
+              onChange={(event) =>
+                setScenario(demoScenarioId(event.target.value))
+              }
+              aria-describedby="monitor-demo-description"
+            >
+              {Object.entries(demoScenarios).map(([id, option]) => (
+                <option key={id} value={id}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <p id="monitor-demo-description" role="status">
+            {demoScenarios[scenario].description}
+          </p>
+          <small>
+            Horário da simulação: {monitoringDate(new Date(now).toISOString())}{' '}
+            · Brasília
+          </small>
+        </section>
+      )}
       <div className="demo-banner monitor-notice" role="status">
         <Radio size={18} aria-hidden="true" />
         <p>
           {demo ? (
             <>
-              <strong>Dados fictícios.</strong> Cenário fixo para demonstrar
-              falhas e métricas dos aplicativos mapeados. Os indicadores usam
-              funcionalidades descritas nas fontes oficiais; todos os valores
-              são simulados e não refletem a situação dos fornecedores ou da
-              2RPnet. Referência: {monitoringDate(snapshot.generatedAt)}.
+              <strong>Dados fictícios.</strong> Cenário selecionável para
+              demonstrar falhas e métricas dos aplicativos mapeados. Os
+              indicadores usam funcionalidades descritas nas fontes oficiais;
+              todos os valores são simulados e não refletem a situação dos
+              fornecedores ou da 2RPnet. Referência:{' '}
+              {monitoringDate(snapshot.generatedAt)}.
             </>
           ) : configured ? (
             <>
@@ -194,6 +256,16 @@ export default function Monitoring() {
           significa que o fornecedor esteja fora do ar. Disponibilidade mede o
           alvo observado, não toda a plataforma.
         </p>
+        {selectedSystem && (
+          <div className="monitor-system-scope">
+            <span>
+              Aplicativo selecionado: <strong>{selectedSystem.name}</strong>
+            </span>
+            <button type="button" className="text-link" onClick={reset}>
+              Ver todos os aplicativos
+            </button>
+          </div>
+        )}
         <div className="monitor-filters">
           <label>
             <span>Buscar sistema</span>

@@ -1,5 +1,5 @@
 import { ecosystemServices } from './ecosystem'
-import connectedApps from './mocks/connected-apps.json' with { type: 'json' }
+export { demoReference, demoSnapshot } from './demoScenarios'
 import type {
   MonitoringSnapshot,
   MonitoredSystem,
@@ -90,11 +90,4 @@ export function inventorySnapshot(): MonitoringSnapshot {
     observations: monitoredSystems.map((s) => unknownObservation(s.id)),
     execution: null,
   }
-}
-
-// Referência fixa e fictícia. Nunca representa uma consulta aos fornecedores.
-export const demoReference = connectedApps.generatedAt
-export function demoSnapshot(): MonitoringSnapshot {
-  // Cópia independente: o cenário usa seu relógio fixo, sem renovar datas como se fossem coletas reais.
-  return structuredClone(connectedApps) as MonitoringSnapshot
 }
