@@ -2,6 +2,36 @@ import { expect, test } from '@playwright/test'
 import { demoSnapshot } from '../src/data/monitoring'
 
 const endpoint = process.env.VITE_MONITORING_API_URL!
+
+test('atalhos da home mantêm a demonstração isolada quando a API real está configurada', async ({
+  page,
+}) => {
+  let requests = 0
+  await page.route(`**${endpoint}`, (route) => {
+    requests++
+    return route.fulfill({ json: responseAt(Date.now()) })
+  })
+  await page.goto('/')
+  await page.getByRole('link', { name: 'Conferir backups' }).click()
+  await expect(page.getByLabel('Cenário da demonstração')).toHaveValue(
+    'overview',
+  )
+  await expect(page.locator('.system-monitor-card')).toHaveCount(1)
+  await expect(
+    page.getByRole('article', { name: 'SharePoint', exact: true }),
+  ).toContainText('Indisponível')
+  await page.getByLabel('Cenário da demonstração').selectOption('normal')
+  await expect(
+    page.getByRole('article', { name: 'SharePoint', exact: true }),
+  ).toContainText('Disponível')
+  expect(requests).toBe(0)
+  await page
+    .getByRole('button', { name: 'Dados da coleta', exact: true })
+    .click()
+  await expect.poll(() => requests).toBeGreaterThan(0)
+  await expect(page.getByLabel('Cenário da demonstração')).toHaveCount(0)
+})
+
 function responseAt(now: number) {
   const snapshot = demoSnapshot()
   const observedAt = new Date(now).toISOString()

@@ -11,6 +11,7 @@ import {
 import { CostCard } from '../../components/cards/CostCard'
 import { costService } from '../../services/costService'
 import { HeroTelemetry } from '../../components/monitoring/HeroTelemetry'
+import { HomePendingTasks } from '../../components/monitoring/HomePendingTasks'
 
 const records = costService.list()
 const featured = [records[0], records[32], records[81]]
@@ -53,6 +54,7 @@ export default function Home() {
           <span>Projeto no contexto 2RPnet / Inovanet Tech</span>
         </div>
       </section>
+      <HomePendingTasks />
       <AboutSection />
       <BenefitsSection />
       <section className="section catalog-showcase">

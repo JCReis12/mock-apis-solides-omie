@@ -184,18 +184,14 @@ test('destacar a telemetria demonstrativa no banner e abrir o monitoramento', as
     'href',
     '/monitoramento',
   )
-  await page
-    .locator('.hero-section')
-    .screenshot({
-      path: `artifacts/${testInfo.project.name}-hero-telemetry-light.png`,
-    })
+  await page.locator('.hero-section').screenshot({
+    path: `artifacts/${testInfo.project.name}-hero-telemetry-light.png`,
+  })
   await page.getByRole('switch', { name: 'Modo escuro' }).click()
   await expect(preview).toContainText('Dados fictícios')
-  await page
-    .locator('.hero-section')
-    .screenshot({
-      path: `artifacts/${testInfo.project.name}-hero-telemetry-dark.png`,
-    })
+  await page.locator('.hero-section').screenshot({
+    path: `artifacts/${testInfo.project.name}-hero-telemetry-dark.png`,
+  })
   await preview.getByRole('link', { name: 'Ver telemetria completa' }).click()
   await expect(page).toHaveURL(/\/monitoramento$/)
   await expect(
@@ -218,6 +214,71 @@ test('manter apenas o botão de acesso futuro ao chatbot sem interface de conver
     await expect(
       page.getByRole('button', { name: 'Enviar pergunta' }),
     ).toHaveCount(0)
+  }
+})
+
+test('destacar pendências administrativas e abrir o aplicativo correspondente', async ({
+  page,
+}, testInfo) => {
+  await page.goto('/')
+  const section = page.getByRole('region', {
+    name: 'O que precisa de atenção?',
+  })
+  await expect(section).toContainText('Dados fictícios')
+  await expect(section.locator('.home-pending-count')).toHaveText([
+    '12',
+    '7',
+    '3',
+  ])
+  await expect(
+    section.getByRole('article', { name: 'Backups pendentes' }),
+  ).toContainText('36 de 48')
+  await expect(
+    section.getByRole('article', { name: 'Documentos aguardando assinatura' }),
+  ).toContainText('41 de 48')
+  await expect(
+    section.getByRole('article', { name: 'Despesas a conciliar' }),
+  ).toContainText('357 de 360')
+  for (const dark of [false, true]) {
+    if (dark) await page.getByRole('switch', { name: 'Modo escuro' }).click()
+    await section.screenshot({
+      path: `artifacts/${testInfo.project.name}-pending-${dark ? 'dark' : 'light'}.png`,
+    })
+  }
+  if (testInfo.project.name === 'mobile') {
+    for (const width of [320, 390, 601]) {
+      await page.setViewportSize({ width, height: 844 })
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true)
+      expect(
+        await section
+          .locator('.home-pending-card')
+          .evaluateAll(
+            (cards) =>
+              cards.filter((card) => card.scrollWidth > card.clientWidth + 1)
+                .length,
+          ),
+      ).toBe(0)
+    }
+  }
+  for (const [action, name] of [
+    ['Conferir backups', 'SharePoint'],
+    ['Conferir assinaturas', 'Autentique'],
+    ['Conferir despesas', 'Omie'],
+  ]) {
+    await page.goto('/')
+    await section.getByRole('link', { name: action }).click()
+    await expect(page).toHaveURL(/\/monitoramento\?mode=demo&system=/)
+    await expect(page.locator('.system-monitor-card')).toHaveCount(1)
+    await expect(page.getByRole('article', { name, exact: true })).toBeVisible()
+    await expect(
+      page.getByRole('status').filter({ hasText: 'Dados fictícios' }),
+    ).toBeVisible()
+    await page.getByRole('button', { name: 'Ver todos os aplicativos' }).click()
+    await expect(page.locator('.system-monitor-card')).toHaveCount(16)
   }
 })
 
