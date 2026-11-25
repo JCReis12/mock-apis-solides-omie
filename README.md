@@ -17,13 +17,15 @@ Atalhos: [Instalação](#instalação-e-execução) · [Deploy](#deploy-na-verce
 
 ## Sobre o projeto
 
-Front-end de apresentação e demonstração do projeto de **automação interna de backoffice**, no contexto 2RPnet / Inovanet Tech. O objetivo é conectar ferramentas e reduzir tarefas manuais nas rotinas administrativas de RH, Financeiro, documentos e comunicação. O chatbot é desenvolvido externamente e sua integração a esta interface está pendente. A **gestão de custos por colaborador é um dos casos de uso**, com dados de RH e Financeiro.
+Front-end de apresentação e demonstração do projeto de **automação interna de backoffice**, no contexto 2RPnet / Inovanet Tech. O objetivo é conectar ferramentas e reduzir tarefas manuais nas rotinas administrativas de RH, Financeiro, documentos e comunicação. O chatbot é desenvolvido externamente e tem um atalho para o ambiente disponibilizado pela equipe no Google Cloud. A **gestão de custos por colaborador é um dos casos de uso**, com dados de RH e Financeiro.
 
 O escopo foi alinhado ao documento `CONTEXTO_GERAL_PROJETO.md` fornecido pelo responsável. Consulte o [mapeamento de escopo](intelligent-cost-management/docs/ESCOPO_FRONTEND.md) para distinguir o projeto de referência das funcionalidades executadas nesta interface.
 
 As observações posteriores sobre fornecedores e rotinas estão no [mapeamento do ecossistema de RH](intelligent-cost-management/docs/ECOSSISTEMA_RH.md) e na página **Tecnologias**. O registro distingue propostas de automação, restrições, processos em análise e atividades fora do escopo atual.
 
-A pendência é [integrar o acesso ao chatbot externo](intelligent-cost-management/docs/CHATBOT.md). Nesta versão, há apenas o botão **Chatbot — em breve**, desabilitado até a configuração e validação dessa integração. O agente não será recriado neste repositório. A rota `/demonstracao` apresenta o contexto, o espaço reservado para o vídeo e o exemplo de custos por seletores.
+O botão **Acessar chatbot** abre em nova aba o [ambiente externo da equipe](https://vertexaisearch.cloud.google.com/home/cid/cae0cdf7-035a-4e16-b30d-e41fd77960ae/r/agent-flow-builder/13380483809853947665?hl=en_US), conforme o link fornecido em **25/11/2026**. O acesso depende das permissões da conta Google. O endereço usa a rota do Flow Builder; não comprova publicação de uma conversa para usuários finais nem integração por API. Consulte [o registro de acesso ao chatbot](intelligent-cost-management/docs/CHATBOT.md). A rota `/demonstracao` apresenta o contexto, o espaço reservado para o vídeo e o exemplo de custos por seletores.
+
+No board, as tarefas do chatbot **#91, #92 e #93** estão em **A validar**, com o direcionamento implementado e a validação autenticada da equipe pendente. O [registro atualizado do Kanban](intelligent-cost-management/docs/kanban/README.md) distingue esse acesso das integrações e da telemetria ainda não confirmadas.
 
 O fluxo informado pela equipe é **Manual Trigger → Consulta RH (Sólides) → Consulta Financeiro (Omie) → Consolidação**, com requisições separadas para RH e Financeiro e um nó próprio de consolidação após a Omie. As respostas têm como referência a documentação oficial dessas plataformas, conforme informado pelo responsável. Essa confirmação atualiza o agrupamento de nós descrito no documento original. Consulte o [registro do chatbot](intelligent-cost-management/docs/CHATBOT.md#fluxo-informado-do-agente-externo).
 
@@ -145,7 +147,7 @@ O arquivo `/mock-monitoring.json` é uma ponte local de desenvolvimento; uma pub
 - Interface clara e uniforme entre páginas institucionais e aplicação, com azul sóbrio, tipografia legível, gráficos em tons discretos e valores com algarismos de largura fixa.
 - Modo claro e escuro pelo botão de sol/lua no cabeçalho, disponível também no celular. Segue o sistema na primeira visita e salva a escolha no navegador; alterações são sincronizadas entre abas. As cores compartilhadas ficam em `src/styles/theme.css`.
 - Apresentação do objetivo de automatizar rotinas, conectar as ferramentas principais e responder às dúvidas da equipe pelo chatbot.
-- Botão **Chatbot — em breve**, reservado para acesso futuro e sem interação de conversa ou simulação de respostas.
+- Link **Acessar chatbot**, habilitado e compartilhado pelas páginas institucionais, com abertura do ambiente da equipe em nova aba.
 - Páginas independentes, menu mobile acessível, indicação da rota ativa, Escape, contenção de foco e bloqueio da rolagem de fundo.
 - **120 cards de colaboradores fictícios**, com título, descrição, departamento, custo mensal e tabela de composição.
 - Tabelas dos cards com salário base, benefícios fixos, despesas variáveis, referência, fontes e variação mensal.
@@ -253,7 +255,7 @@ docs/ESCOPO_FRONTEND.md       # Correspondência com o contexto fornecido
 
 [Protótipo Figma fornecido](https://www.figma.com/design/Q6pYa2PRIZKpCFZ2L3BZuX/Untitled?node-id=0-1). O arquivo não pôde ser acessado durante a implementação; não se afirma fidelidade ao protótipo. Não foram encontrados logos oficiais.
 
-O visual mantém uma apresentação sóbria, com Inter e temas claro e escuro. O banner institucional combina a apresentação da automação com uma prévia de telemetria em azul-marinho: total de alvos, distribuição dos estados e três aplicativos em destaque. Os números vêm do mesmo JSON demonstrativo do monitoramento, com identificação de dados fictícios, referência fixa e links para o painel completo. Tipografia, margens e botões se adaptam à largura da tela; no celular, a prévia aparece abaixo da apresentação. O botão futuro do chatbot permanece reservado; dashboard, catálogo e composição de custos aparecem como um caso de uso da solução.
+O visual mantém uma apresentação sóbria, com Inter e temas claro e escuro. O banner institucional combina a apresentação da automação com uma prévia de telemetria em azul-marinho: total de alvos, distribuição dos estados e três aplicativos em destaque. Os números vêm do mesmo JSON demonstrativo do monitoramento, com identificação de dados fictícios, referência fixa e links para o painel completo. Tipografia, margens e botões se adaptam à largura da tela; no celular, a prévia aparece abaixo da apresentação. O atalho do chatbot abre o ambiente externo da equipe; dashboard, catálogo e composição de custos aparecem como um caso de uso da solução.
 
 Os testes verificam o caso 101 de R$ 12.025,50, associação por CPF normalizado, isolamento por competência, integridade dos 120 cards, reconciliação dos gráficos, filtros, paginação e ausência de CPF completo na tela. Os fluxos são executados em **1440 × 1000**, **768 × 1024** e **390 × 844**. Capturas ficam em `artifacts/` e traces de falha em `test-results/`, pastas ignoradas pelo Git.
 

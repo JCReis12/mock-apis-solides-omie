@@ -4,6 +4,20 @@ Os **120 cartões solicitados são tarefas exclusivas do front-end no GitHub**, 
 
 Quadro: **[Gestão de custos — Front-end](https://github.com/users/Jukamargo/projects/2)**.
 
+## Atualização de 25/11/2026 — acesso ao chatbot da equipe
+
+O link fornecido pelo responsável foi configurado em `src/data/chatbot.ts`, com **Acessar chatbot** abrindo o ambiente da equipe no Google Cloud em nova aba. Os textos da interface e a documentação foram atualizados. O plano desta revisão está em `chatbot-acesso.json`.
+
+| Cartão                                                                                 | Entrega atual                                             | Status verificado |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------- | ----------------- |
+| [#91 — GC-KB-091](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/91) | Atalho compartilhado, teclado, nova aba e responsividade  | A validar         |
+| [#92 — GC-KB-092](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/92) | Endereço fornecido e direcionamento configurado           | A validar         |
+| [#93 — GC-KB-093](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/93) | Comunicação do acesso externo na interface e documentação | A validar         |
+
+A #92 saiu de **A fazer** para **A validar** e deixou de ter o impedimento de obter o endereço. O acesso autenticado e o aceite da equipe permanecem pendentes: a rota fornecida é `agent-flow-builder`, sem confirmação de URL pública de conversa, API ou telemetria. As dependências de permissões e telemetria continuam em #124 e #123. Nenhuma issue foi encerrada e os outros status do quadro foram preservados.
+
+Verificação: **134 itens**, sendo **122 em A validar**, **10 em A fazer**, **1 em Em andamento** e **1 em Concluído**. Evidências técnicas: lint, build e 12 testes de interface aprovados; a navegação externa foi interceptada nos testes, sem autenticação ou execução real do agente. O registro detalhado do destino está em [CHATBOT.md](../CHATBOT.md).
+
 ## Atualização de 24/11/2026 — demonstração dos aplicativos
 
 O quadro foi reconciliado e verificado no GitHub: **134 itens**, sendo **121 em A validar**, **11 em A fazer**, **1 em Em andamento** e **1 em Concluído**. As 120 tarefas originais permanecem no quadro, acompanhadas das 11 de telemetria e das três entregas demonstrativas abaixo.

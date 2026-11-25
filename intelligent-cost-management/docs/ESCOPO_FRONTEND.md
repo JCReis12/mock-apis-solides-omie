@@ -6,7 +6,7 @@ Referências de negócio: `CONTEXTO_GERAL_PROJETO.md`, o mapeamento de fornecedo
 
 O projeto é de **automação interna de backoffice**. Seu objetivo é conectar as ferramentas principais e reduzir tarefas manuais nos processos administrativos de RH, Financeiro, benefícios, documentos e comunicação. O público é a equipe interna da empresa.
 
-O chatbot é desenvolvido externamente como canal de consulta às informações desses processos. A pendência deste front-end é integrar o acesso a esse serviço; não desenvolver um novo chatbot. A forma de acesso e os dados disponíveis dependem de confirmação com a equipe responsável.
+O chatbot é desenvolvido externamente como canal de consulta às informações desses processos. Este front-end disponibiliza um atalho para o ambiente fornecido pela equipe no Google Cloud. A validação autenticada, uma eventual URL de conversa publicada e os dados disponíveis continuam sob responsabilidade da equipe externa; o agente não é recriado nesta interface.
 
 A gestão de custos por colaborador é um caso de uso dessa proposta. Sua consolidação considera salário base, benefícios fixos e despesas variáveis, cruzando CPF e competência. Os cálculos e dados fictícios existentes foram preservados.
 
@@ -30,7 +30,7 @@ As respostas usam como referência a documentação oficial de Sólides e Omie, 
 
 ## Demonstração funcional
 
-- Botão **Chatbot — em breve**, desabilitado e reservado para a implementação futura.
+- Link **Acessar chatbot** para o ambiente externo fornecido pela equipe, em nova aba e sujeito às permissões da conta Google.
 - Apresentação das rotinas e restrições do mapeamento de RH, sem interface de conversa.
 - 120 colaboradores fictícios em quatro departamentos.
 - Outubro de 2026 como referência do catálogo e dashboard.
@@ -52,7 +52,7 @@ Após a [definição da arquitetura de monitoramento](MONITORAMENTO_BACKOFFICE.m
 
 Os modelos locais são normalizados para a interface, e não uma declaração de compatibilidade integral com todos os campos das APIs externas. Nenhum endpoint externo é chamado nesta versão. O texto não apresenta o workflow documentado como se estivesse conectado ao navegador.
 
-A [integração do chatbot externo permanece pendente](CHATBOT.md). A interface mantém somente seu botão de acesso desabilitado, sem conversa, respostas locais ou adaptador de agente. A consulta por seletores continua disponível como exemplo de custos.
+O [direcionamento ao ambiente do chatbot externo está configurado](CHATBOT.md) pelo link fornecido em 25/11/2026. A interface abre o destino em nova aba; a publicação de um canal de conversa, a validação autenticada e a telemetria continuam dependências externas. A consulta por seletores permanece como exemplo de custos.
 
 Os status Atenção/Redução/Regular derivam da variação dos valores simulados e são uma convenção adicional do front-end. Não representam status contratual, avaliação de IA ou resultado financeiro comprovado. Encargos e outras parcelas fora da fórmula fornecida não são estimados.
 

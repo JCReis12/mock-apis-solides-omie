@@ -1,5 +1,11 @@
 # Publicação das tarefas de front-end no GitHub
 
+## Revisão de 25/11/2026 — link do chatbot
+
+As issues [#91](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/91), [#92](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/92) e [#93](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/93) foram atualizadas e verificadas em **A validar**, com o endereço fornecido pela equipe, novos títulos, critérios técnicos verificados e aceite autenticado pendente. O histórico anterior foi preservado nos detalhes de cada issue. O impedimento de obter o endereço foi removido da #92; permissões de uso e telemetria continuam acompanhadas separadamente em #124 e #123.
+
+O quadro tem **134 itens**: 122 A validar, 10 A fazer, 1 Em andamento e 1 Concluído. Os status dos demais cartões foram preservados e nenhuma issue foi encerrada. A entrega inclui lint, build e 12 testes de navegação/teclado, temas e responsividade, com o destino externo interceptado. Consulte [o acesso configurado e seus limites](../CHATBOT.md) e o plano versionado `chatbot-acesso.json`.
+
 ## Revisão de 24/11/2026 — aplicativos demonstrativos
 
 Atualização aplicada e verificada em [GitHub Projects](https://github.com/users/Jukamargo/projects/2): **134 cartões**, distribuídos em 121 A validar, 11 A fazer, 1 Em andamento e 1 Concluído.
