@@ -4,6 +4,7 @@ import { currency } from '../src/services/costService'
 import { employees, variableExpenses } from '../src/data/people'
 import { consolidateEmployee } from '../src/services/consolidationService'
 import { demoReference, demoSnapshot } from '../src/data/monitoring'
+import { chatbotUrl } from '../src/data/chatbot'
 import {
   summarizeMonitoring,
   systemMonitors,
@@ -200,17 +201,49 @@ test('destacar a telemetria demonstrativa no banner e abrir o monitoramento', as
   await expect(page.locator('.system-monitor-card')).toHaveCount(summary.total)
 })
 
-test('manter apenas o botão de acesso futuro ao chatbot sem interface de conversa', async ({
+test('abrir o chatbot da equipe em nova aba pelo link configurado', async ({
   page,
+  context,
 }) => {
-  for (const path of ['/', '/demonstracao']) {
+  await context.route(chatbotUrl, (route) =>
+    route.fulfill({
+      contentType: 'text/html',
+      body: '<title>Destino externo de teste</title>',
+    }),
+  )
+  for (const path of [
+    '/',
+    '/sobre',
+    '/beneficios',
+    '/demonstracao',
+    '/tecnologias',
+  ]) {
     await page.goto(path)
-    const buttons = page.getByRole('button', { name: 'Chatbot — em breve' })
-    await expect(buttons.first()).toBeVisible()
-    for (const button of await buttons.all())
-      await expect(button).toBeDisabled()
+    const links = page.getByRole('link', {
+      name: 'Acessar chatbot da equipe (abre em nova aba)',
+    })
+    await expect(links.first()).toBeVisible()
+    for (const link of await links.all()) {
+      await expect(link).toHaveAttribute('href', chatbotUrl)
+      await expect(link).toHaveAttribute('target', '_blank')
+      await expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+    }
+    await links.first().focus()
+    const opened = context.waitForEvent('page')
+    await links.first().press('Enter')
+    const external = await opened
+    await external.waitForLoadState()
+    await expect(external).toHaveURL(chatbotUrl)
+    await expect(external).toHaveTitle('Destino externo de teste')
+    expect(new URL(page.url()).pathname).toBe(path)
+    await external.close()
+    await expect(
+      page.getByRole('button', { name: 'Chatbot — em breve' }),
+    ).toHaveCount(0)
     await expect(page.getByRole('log')).toHaveCount(0)
-    await expect(page.getByRole('textbox')).toHaveCount(0)
+    await expect(page.locator('input[placeholder*="pergunta" i]')).toHaveCount(
+      0,
+    )
     await expect(
       page.getByRole('button', { name: 'Enviar pergunta' }),
     ).toHaveCount(0)

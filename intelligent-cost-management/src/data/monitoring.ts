@@ -33,7 +33,7 @@ export const monitoredSystems: readonly MonitoredSystem[] = [
     name: 'Agente externo',
     area: 'Automação',
     target: 'Execuções e quatro nós do workflow',
-    scopeLabel: 'Gemini Enterprise · publicação pendente',
+    scopeLabel: 'Gemini Enterprise · acesso externo da equipe',
   },
   {
     id: 'onfly',

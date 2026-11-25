@@ -2,7 +2,7 @@
 
 Primeira implementação funcional da [arquitetura do backoffice](MONITORAMENTO_BACKOFFICE.md). A rota **`/monitoramento`** está acessível pela navegação da aplicação, pelo menu mobile e pelo rodapé.
 
-As APIs de RH e Financeiro informadas são **mocks no Render**. O agente está no Gemini Enterprise e ainda não foi publicado. O [guia das APIs mock](INTEGRACAO_APIS_MOCK.md) registra os endpoints e o coletor pontual disponível, que pode alimentar o painel local. Uma medição verdadeira desses mocks não confirma a saúde dos fornecedores reais.
+As APIs de RH e Financeiro informadas são **mocks no Render**. O [acesso externo ao ambiente do agente](CHATBOT.md) está configurado pelo link fornecido pela equipe; publicação de um canal de conversa e exportação de telemetria não foram confirmadas. O [guia das APIs mock](INTEGRACAO_APIS_MOCK.md) registra os endpoints e o coletor pontual disponível, que pode alimentar o painel local. Uma medição verdadeira desses mocks não confirma a saúde dos fornecedores reais.
 
 ## Comportamento disponível
 

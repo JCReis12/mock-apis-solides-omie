@@ -8,11 +8,13 @@ O nome do projeto permanece **Gestão de custos**, conforme a orientação do re
 
 ## Situação atual
 
-O chatbot é desenvolvido fora deste repositório. A pendência aqui é **integrar seu acesso ao front-end**. O endereço e o contrato de acesso ainda não estão disponíveis, conforme informado pelo responsável.
+Em **25/11/2026**, o responsável forneceu o [endereço do ambiente do chatbot da equipe](https://vertexaisearch.cloud.google.com/home/cid/cae0cdf7-035a-4e16-b30d-e41fd77960ae/r/agent-flow-builder/13380483809853947665?hl=en_US). O front-end agora oferece **Acessar chatbot**, abrindo exatamente esse endereço em uma nova aba. O link fica centralizado em `src/data/chatbot.ts` e é compartilhado pela home, pela demonstração e pelas chamadas das páginas institucionais.
 
-Atualização informada pelo responsável: o agente está no **Gemini Enterprise**, ainda não publicado, e consulta **duas APIs mock** baseadas na documentação das plataformas reais. O próprio responsável acompanha essa configuração. Histórico e exportação ainda não foram confirmados nesse ambiente; a publicação não deve ser tratada como garantia de telemetria configurada. Consulte o [guia de integração e verificação dos mocks](INTEGRACAO_APIS_MOCK.md).
+O endereço fornecido usa a rota **`agent-flow-builder`** no Google Cloud. Ele é o destino de navegação indicado pela equipe; não foi confirmado como URL pública de conversa ou como endpoint de API. A abertura efetiva depende da conta Google e das permissões no ambiente. A pesquisa sem autenticação não conseguiu acessar a página. Nenhuma conversa, alteração no agente ou execução foi realizada para validar o link.
 
-O site mantém apenas o botão **Chatbot — em breve**, desabilitado enquanto a integração não estiver configurada. O botão está em `src/components/ui/ChatbotButton.tsx` e não abre conversa, modal, janela externa ou serviço.
+O componente `src/components/ui/ChatbotButton.tsx` é um link com aparência de botão, habilitado, com `target="_blank"` e `rel="noopener noreferrer"`. O rótulo acessível informa a abertura em nova aba. Os testes verificam a URL, a navegação por teclado e a preservação da página original, interceptando o destino externo sem autenticar ou executar o agente real.
+
+O agente externo, descrito pela equipe no Gemini Enterprise, utiliza duas APIs mock baseadas na documentação das plataformas reais. Sua publicação para usuários finais, histórico e exportação de eventos ainda precisam de confirmação; a existência do link não comprova telemetria configurada. Consulte o [guia de integração e verificação dos mocks](INTEGRACAO_APIS_MOCK.md).
 
 A rota `/demonstracao` apresenta a proposta, o vídeo ainda pendente e o caso de custos por seletores. Não há implementação de chatbot, histórico, campo de pergunta, respostas simuladas, serviço de mensagens ou adaptador de agente neste repositório.
 
@@ -33,10 +35,10 @@ Segundo a equipe, as respostas são elaboradas com base na **documentação ofic
 
 O fluxo é apresentado na rota `/demonstracao`. Sua execução pertence ao agente externo; esta interface não dispara essas requisições enquanto sua integração não estiver configurada.
 
-## Integração pendente
+## Acesso configurado e dependências externas
 
-O desenvolvimento do chatbot pertence à equipe externa. O trabalho deste front-end é integrar o acesso ao serviço existente quando a forma de acesso for fornecida e validada. O botão deve ser habilitado somente após essa integração; não é necessário recriar o chatbot neste repositório.
+O desenvolvimento do chatbot pertence à equipe externa. O direcionamento solicitado está configurado pelo link fornecido; o front-end não incorpora a conversa nem recria o agente. A validação autenticada das permissões e das consultas cabe à equipe responsável pelo ambiente.
 
-Para a integração, a equipe precisa fornecer o endereço de acesso ou contrato do serviço e definir como o front-end deverá acessá-lo. Também é necessário confirmar quais informações e fontes estarão disponíveis. Esses detalhes ainda não foram fornecidos nesta conversa; não se presume API disponível para cada serviço do diagrama.
+Uma integração futura por API, a leitura de execuções e uma eventual URL publicada para usuários finais dependem de contratos e acessos próprios. Nenhuma dessas capacidades é presumida a partir do endereço do Flow Builder. A [issue #92](https://github.com/Jukamargo/frontend-pi-gestao-de-custos/issues/92) acompanha o aceite do direcionamento; as dependências de credenciais e telemetria continuam em #124 e #123.
 
 A automação dos processos e a consulta pelo chatbot são partes relacionadas da solução. A execução real de cadastros, e-mails e backups pertence às integrações a implementar.

@@ -1,0 +1,43 @@
+{
+  "repository": "Jukamargo/frontend-pi-gestao-de-custos",
+  "projectOwner": "Jukamargo",
+  "projectNumber": 2,
+  "updatedOn": "2026-11-25",
+  "status": "A validar",
+  "linkSource": "src/data/chatbot.ts",
+  "cards": [
+    {
+      "number": 91,
+      "id": "GC-KB-091",
+      "title": "Validar o atalho externo do chatbot da equipe",
+      "description": "Substituir o botão reservado pelo link compartilhado Acessar chatbot, abrindo o ambiente fornecido pela equipe em nova aba.",
+      "verifiedCriteria": [
+        "Exibir o mesmo endereço na home, na demonstração e nas chamadas das páginas institucionais.",
+        "Abrir em nova aba com noopener noreferrer e rótulo acessível, preservando a página de origem.",
+        "Preservar temas, navegação por teclado e responsividade."
+      ]
+    },
+    {
+      "number": 92,
+      "id": "GC-KB-092",
+      "title": "Disponibilizar o acesso externo ao chatbot da equipe",
+      "description": "Registrar e configurar o endereço fornecido pelo responsável em 25/11/2026. O direcionamento pelo front-end está implementado; a validação autenticada do ambiente continua com a equipe externa.",
+      "verifiedCriteria": [
+        "Centralizar exatamente o endereço fornecido em src/data/chatbot.ts.",
+        "Habilitar os atalhos de navegação para o ambiente externo, sem recriar o agente ou simular respostas.",
+        "Validar o redirecionamento com o destino interceptado em testes, sem autenticar ou executar o agente real."
+      ]
+    },
+    {
+      "number": 93,
+      "id": "GC-KB-093",
+      "title": "Atualizar a comunicação do acesso ao chatbot externo",
+      "description": "Atualizar os textos da home, demonstração, benefícios, tecnologias e documentação para refletir o acesso externo configurado.",
+      "verifiedCriteria": [
+        "Substituir em breve e integração de acesso pendente por Acessar chatbot e orientações sobre o ambiente da equipe.",
+        "Informar abertura em nova aba e dependência das permissões da conta Google.",
+        "Distinguir o endereço do Flow Builder de publicação para usuários finais, API de conversa e telemetria ainda não confirmadas."
+      ]
+    }
+  ]
+}

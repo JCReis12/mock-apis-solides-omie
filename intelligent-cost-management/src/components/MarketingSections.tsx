@@ -48,8 +48,8 @@ export function AboutSection() {
           <p>
             Desenvolvida no contexto da 2RPnet / Inovanet Tech, esta versão
             apresenta os processos mapeados e um caso de consulta de custos. O
-            chatbot é desenvolvido externamente e será integrado a esta
-            interface para apoiar as dúvidas da equipe.
+            chatbot é desenvolvido externamente e pode ser acessado pelo link do
+            ambiente disponibilizado pela equipe.
           </p>
           <Link to="/sobre" className="text-link">
             Entender a proposta <ArrowUpRight size={17} />
@@ -83,7 +83,7 @@ const benefits = [
     title: 'Consultar em uma conversa',
     text: 'Usar o chatbot como ponto de consulta para dúvidas sobre processos, ferramentas e custos.',
     detail:
-      'O chatbot é desenvolvido externamente; sua integração a esta interface está pendente. A consulta de custos já pode ser explorada no dashboard, no catálogo e nos seletores demonstrativos.',
+      'O acesso ao ambiente externo do chatbot está disponível pelo link da equipe. A consulta de custos também pode ser explorada no dashboard, no catálogo e nos seletores demonstrativos.',
   },
   {
     icon: Gauge,
@@ -140,12 +140,13 @@ export function AgentSection({ full = false }: { full?: boolean }) {
           <div>
             <SectionHeading
               level={full ? 1 : 2}
-              eyebrow="Chatbot externo · integração pendente"
+              eyebrow="Chatbot externo · acesso da equipe"
               title="Perguntas sobre processos, ferramentas e custos"
             >
               O chatbot é desenvolvido externamente para consultar as
-              informações das ferramentas principais. Falta integrar seu acesso
-              a esta interface para disponibilizá-lo à equipe.
+              informações das ferramentas principais. Acesse o ambiente
+              disponibilizado pela equipe em uma nova aba, com sua conta
+              autorizada do Google Cloud.
             </SectionHeading>
             <div className="agent-points">
               <span>
@@ -258,7 +259,7 @@ export function TechnologiesSection({ full = false }: { full?: boolean }) {
             <h3>Chatbot</h3>
             <p>Respostas às dúvidas da equipe, com indicação das fontes.</p>
             <span className="architecture-status">
-              Desenvolvimento externo · integração pendente
+              Desenvolvimento externo · acesso pelo ambiente da equipe
             </span>
           </div>
         </div>
@@ -268,8 +269,8 @@ export function TechnologiesSection({ full = false }: { full?: boolean }) {
               <h3>Nesta interface</h3>
               <p>
                 React, TypeScript, Vite e React Router. A interface apresenta o
-                escopo e o botão reservado ao chatbot externo. O dashboard e os
-                seletores de custos utilizam dados fictícios locais.
+                escopo e o link para o ambiente externo do chatbot. O dashboard
+                e os seletores de custos utilizam dados fictícios locais.
               </p>
             </article>
             <article>
@@ -285,12 +286,13 @@ export function TechnologiesSection({ full = false }: { full?: boolean }) {
               <h3>Próximas etapas do projeto</h3>
               <p>
                 Priorizar as ferramentas principais, confirmar seus contratos de
-                acesso e integrar o acesso ao chatbot externo. O contexto
-                técnico registra um workflow Gemini Enterprise. O fluxo atual
-                informado pela equipe é Manual Trigger, Consulta RH (Sólides),
-                Consulta Financeiro (Omie) e Consolidação em nó separado, com
-                requisições distintas para RH e Financeiro. Sua conexão à
-                interface e a evolução para BigQuery permanecem etapas futuras.
+                acesso e validar as consultas no ambiente externo do chatbot. O
+                contexto técnico registra um workflow Gemini Enterprise. O fluxo
+                atual informado pela equipe é Manual Trigger, Consulta RH
+                (Sólides), Consulta Financeiro (Omie) e Consolidação em nó
+                separado, com requisições distintas para RH e Financeiro. A
+                leitura da telemetria do agente e a evolução para BigQuery
+                permanecem etapas futuras.
               </p>
             </article>
           </div>
@@ -305,11 +307,11 @@ export function CallToAction() {
     <section className="cta-section">
       <div className="container cta-inner">
         <div>
-          <span className="eyebrow">Próxima etapa do projeto</span>
+          <span className="eyebrow">Ambiente da equipe</span>
           <h2>Chatbot para as dúvidas da equipe</h2>
           <p>
-            O chatbot é desenvolvido externamente. A integração de seu acesso a
-            esta interface é a próxima etapa para disponibilizá-lo à equipe.
+            Abra o ambiente externo disponibilizado pela equipe. O acesso usa
+            sua conta autorizada do Google Cloud e acontece em uma nova aba.
           </p>
         </div>
         <div className="cta-actions">

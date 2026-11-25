@@ -1,6 +1,6 @@
 # Verificar as APIs mock e exibir as medições
 
-O agente é acompanhado pelo responsável no **Gemini Enterprise** e ainda não foi publicado. Seu histórico e a forma de exportação precisam ser conferidos no ambiente. As APIs já existentes usam dados de negócio fictícios e foram construídas com base nas documentações das plataformas reais.
+O agente é acompanhado pelo responsável no **Gemini Enterprise**, com [atalho para o ambiente externo](CHATBOT.md) configurado a partir do link fornecido em 25/11/2026. A publicação para usuários finais, seu histórico e a forma de exportação precisam ser conferidos no ambiente. As APIs já existentes usam dados de negócio fictícios e foram construídas com base nas documentações das plataformas reais.
 
 | Alvo                   | Servidor informado                           | Consulta                                               |
 | ---------------------- | -------------------------------------------- | ------------------------------------------------------ |

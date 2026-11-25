@@ -1,15 +1,19 @@
-import { MessageSquare } from 'lucide-react'
+import { ArrowUpRight, MessageSquare } from 'lucide-react'
+import { chatbotUrl } from '../../data/chatbot'
 
 export function ChatbotButton() {
   return (
-    <button
-      type="button"
+    <a
+      href={chatbotUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       className="button chatbot-button"
-      disabled
-      title="O acesso ao chatbot externo será disponibilizado após a integração"
+      aria-label="Acessar chatbot da equipe (abre em nova aba)"
+      title="Abrir o ambiente da equipe no Google Cloud em nova aba"
     >
       <MessageSquare size={17} aria-hidden="true" />
-      Chatbot — em breve
-    </button>
+      Acessar chatbot
+      <ArrowUpRight size={15} aria-hidden="true" />
+    </a>
   )
 }
