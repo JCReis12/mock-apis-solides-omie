@@ -7,10 +7,11 @@ from pathlib import Path
 SOLIDES_API_URL = "https://inovanet-mock-solides.onrender.com/solides/colaboradores"
 OMIE_API_URL = "https://inovanet-mock-omie.onrender.com/omie/despesas"
 
-COLABORADORES_IDS = [101, 102]
+COLABORADORES_IDS = [101, 102, 103, 104]
 PERIODOS = ["2026-09", "2026-10"]
 
-OUTPUT_DIR = Path(__file__).parent / "exports_drive"
+# Pasta data/ na raiz do repositório
+OUTPUT_DIR = Path(__file__).resolve().parent.parent / "data"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 
@@ -20,7 +21,7 @@ def requisitar_json(url: str) -> dict:
         return json.loads(response.read().decode("utf-8"))
 
 
-def sincronizar_apis_para_drive():
+def sincronizar_apis_para_data():
     print("1. Consultando API da Sólides no Render...")
     registros_solides = []
     cpfs_encontrados = []
@@ -31,12 +32,11 @@ def sincronizar_apis_para_drive():
         registros_solides.append(dados)
         cpfs_encontrados.append(dados["colaborador_cpf"])
 
-    # Gerar CSV da Sólides para o Google Drive
+    # Gerar CSV da Sólides
     csv_solides_path = OUTPUT_DIR / "solides_colaboradores.csv"
     with open(csv_solides_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow([
-            "fonte",
             "colaborador_id",
             "nome",
             "colaborador_cpf",
@@ -50,11 +50,12 @@ def sincronizar_apis_para_drive():
             "wellhub_gympass",
             "auxilio_home_office",
             "total_beneficios_fixos",
+            "custo_fixo_total",
         ])
         for c in registros_solides:
             b = c["beneficios_fixos"]
+            custo_fixo_total = round(c["salario_base"] + c["total_beneficios_fixos"], 2)
             writer.writerow([
-                c["fonte"],
                 c["colaborador_id"],
                 c["nome"],
                 c["colaborador_cpf"],
@@ -68,6 +69,7 @@ def sincronizar_apis_para_drive():
                 b["wellhub_gympass"],
                 b["auxilio_home_office"],
                 c["total_beneficios_fixos"],
+                custo_fixo_total,
             ])
 
     print("2. Consultando API do Omie no Render...")
@@ -78,18 +80,16 @@ def sincronizar_apis_para_drive():
             dados = requisitar_json(url)
             for item in dados.get("despesas", []):
                 lancamentos_omie.append({
-                    "fonte": dados["fonte"],
                     "colaborador_cpf": dados["colaborador_cpf"],
                     "periodo": dados["periodo"],
                     **item,
                 })
 
-    # Gerar CSV do Omie para o Google Drive
+    # Gerar CSV do Omie
     csv_omie_path = OUTPUT_DIR / "omie_despesas.csv"
     with open(csv_omie_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow([
-            "fonte",
             "colaborador_cpf",
             "periodo",
             "id_lancamento",
@@ -102,7 +102,6 @@ def sincronizar_apis_para_drive():
         ])
         for d in lancamentos_omie:
             writer.writerow([
-                d["fonte"],
                 d["colaborador_cpf"],
                 d["periodo"],
                 d["id_lancamento"],
@@ -118,4 +117,4 @@ def sincronizar_apis_para_drive():
 
 
 if __name__ == "__main__":
-    sincronizar_apis_para_drive()
+    sincronizar_apis_para_data()
