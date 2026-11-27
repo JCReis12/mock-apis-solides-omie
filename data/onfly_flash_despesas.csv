@@ -1,0 +1,10 @@
+id_registro,plataforma,colaborador_cpf,periodo,data_despesa,categoria,descricao,valor,status_aprovacao
+ONFLY-2610-01,Onfly,123.456.789-00,2026-10,2026-10-08,Viagens Corporativas,Passagem aérea e deslocamento para reunião presencial em São Paulo,940.50,Aprovado e Pago
+FLASH-2610-02,Flash,123.456.789-00,2026-10,2026-10-15,Reembolso de Despesas,Alimentação e táxi durante evento técnico,285.00,Aprovado e Pago
+ONFLY-2610-03,Onfly,123.456.789-00,2026-10,2026-10-22,Hospedagem,Diária de hotel em São Paulo (1 noite),420.00,Aprovado e Pago
+FLASH-2609-01,Flash,123.456.789-00,2026-09,2026-09-12,Reembolso de Despesas,Compra de periférico autorizado (headset corporativo),310.00,Aprovado e Pago
+FLASH-2610-11,Flash,456.789.012-34,2026-10,2026-10-18,Reembolso de Despesas,Certificação Professional Cloud Architect Google Cloud,1200.00,Aprovado e Pago
+ONFLY-2610-20,Onfly,321.654.987-88,2026-10,2026-10-04,Viagens Corporativas,Passagens aéreas ida e volta para visita a cliente enterprise em Belo Horizonte,1420.00,Aprovado e Pago
+ONFLY-2610-21,Onfly,321.654.987-88,2026-10,2026-10-06,Hospedagem,2 diárias de hotel em Belo Horizonte,850.00,Aprovado e Pago
+FLASH-2610-22,Flash,321.654.987-88,2026-10,2026-10-12,Reembolso de Despesas,Jantar de relacionamento com tomadores de decisão do cliente,540.00,Aprovado e Pago
+ONFLY-2609-20,Onfly,321.654.987-88,2026-09,2026-09-18,Viagens Corporativas,Deslocamento e transporte terrestre para feira de tecnologia,320.00,Aprovado e Pago
