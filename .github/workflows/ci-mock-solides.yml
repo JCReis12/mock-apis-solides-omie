@@ -1,0 +1,44 @@
+name: CI Mock Sólides
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash
+        working-directory: mock-solides
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Instalar dependências
+        run: python -m pip install -r requirements.txt
+      - name: Testar endpoints do mock Sólides
+        run: |
+          base_url=http://127.0.0.1:8000
+          python -m uvicorn app:app --host 127.0.0.1 --port 8000 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+
+          curl --fail --silent --show-error --retry 10 --retry-connrefused \
+            --retry-delay 1 --max-time 5 "$base_url/openapi.json" > /dev/null
+
+          curl --fail --silent --show-error --max-time 5 "$base_url/solides/colaboradores" \
+            | jq -e 'any(.[]; .colaborador_id == 101)' > /dev/null
+          curl --fail --silent --show-error --max-time 5 "$base_url/solides/colaboradores/101" \
+            | jq -e '.colaborador_id == 101 and (.beneficios_fixos | type == "object")' > /dev/null
+
+          status=$(curl --silent --show-error --max-time 5 --output /dev/null \
+            --write-out '%{http_code}' "$base_url/solides/colaboradores/999999")
+          test "$status" = 404
