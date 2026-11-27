@@ -1,0 +1,5 @@
+colaborador_id,nome,colaborador_cpf,email_corporativo,cargo,departamento,centro_custo,regime_contratacao,status,data_admissao,gestor_direto
+101,Ana Beatriz Souza,123.456.789-00,ana.souza@inovanet.tech,Analista de Dados Sênior,Tecnologia e Dados,CC-101-TECH,CLT,Ativo,2024-03-10,Mariana Ribeiro Costa
+102,Carlos Eduardo Lima,987.654.321-11,carlos.lima@inovanet.tech,Analista Financeiro Pleno,Financeiro,CC-201-FIN,CLT,Ativo,2025-01-15,Diretoria Financeira
+103,Mariana Ribeiro Costa,456.789.012-34,mariana.costa@inovanet.tech,Tech Lead de Infraestrutura & Cloud,Infraestrutura e TI,CC-102-INFRA,CLT,Ativo,2023-08-01,CTO Inovanet
+104,Rodrigo Silva Santos,321.654.987-88,rodrigo.santos@inovanet.tech,Executivo de Contas Sênior,Comercial e Clientes,CC-301-COM,CLT,Ativo,2024-05-10,Diretoria Comercial

@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: inovanet-mock-solides
+    env: python
+    rootDir: mock-solides
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    plan: free
+
+  - type: web
+    name: inovanet-mock-omie
+    env: python
+    rootDir: mock-omie
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    plan: free
